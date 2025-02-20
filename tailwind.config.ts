@@ -12,6 +12,10 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      fontFamily: {
+        head: ["Patrick Hand SC"],
+        normal: ["Nunito"]
+      }
     },
   },
   plugins: [],
