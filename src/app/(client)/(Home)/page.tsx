@@ -1,35 +1,77 @@
 "use client";
 import HomeNav from "@/components/HomeNav/HomeNav";
+import RecentProducts from "@/components/RecentProducts/RecentProducts";
+import UploadImageView from "@/components/UploadImageView/UploadImageView";
 import Image from "next/image";
 import React, { ChangeEvent } from "react";
 
 const Home = () => {
   const [file, setFile] = React.useState<File | null>(null);
 
-  console.log(file);
+  const [imagePreview, setImagePreview] = React.useState<string | null>(null);
+
+  const uploadFileInputRef = React.useRef<HTMLInputElement | null>(null);
+
+  const handleFileUploadOnChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const file = e.target.files[0]; 
+      if (file.type.split("/")[0] !== "image") {
+        alert("Upload file is not an image..");
+        return;
+      }
+      setFile(file);
+      const imageURL = URL.createObjectURL(file);
+      setImagePreview(imageURL);
+    }
+  };
+
+  const handleUploadFileBtnClick = () => {
+    if (uploadFileInputRef.current) {
+      uploadFileInputRef.current.click();
+    }
+  };
+
   return (
-    <div className="h-full w-full bg-orange-50">
+    <div className="min-h-dvh w-full bg-orange-50 overflow-x-hidden">
+      {file && imagePreview && (
+        <UploadImageView
+          file={file}
+          setFile={setFile}
+          imagePreview={imagePreview}
+        />
+      )}
       <HomeNav />
       <div className="flex flex-col sm:flex-row align-start justify-center gap-[10px] pl-[20%] pr-[20%] mt-[20px]">
         <label className="cursor-pointer">
-          <Image src={"/camera.png"} alt="" width={300} height={200} />
+          <Image src={"/camera.png"} alt="" width={250} height={250} className="w-[180px] h-[180px] md:w-[250px] md:h-[250px]"/>
           <input
             type="file"
             capture="user"
             accept="image/*"
-            className="h-full w-full invisible"
-            onChange={(e: ChangeEvent<HTMLInputElement>) => {
-              console.log(e);
-            }}
+            className="invisible"
+            onChange={handleFileUploadOnChange}
           />
         </label>
-        <div>
-          <p className="font-head sm:text-sm md:text-lg mt-[5%] font-medium flex flex-col">
-            Tap on the camera to upload a photo of your food ingredient, and
-            I’ll help you with all the details about it!
+        <div className="flex flex-col gap-[20px] items-start">
+          <p className="font-head sm:text-sm md:text-lg mt-[5%] font-medium min-w-[200px]">
+            Tap on the camera to click then upload a photo of your food
+            ingredient, and I’ll help you with all the details about it!
           </p>
+          <button
+            className="sm:ml-none lg:ml-[20px] font-head bg-gradient-to-r from-yellow-500 to-red-500 pt-[5px] pb-[5px] pl-[25px] pr-[25px] sm:text-sm lg:text-lg font-medium rounded-md border hover:border-black transition-all duration-300 ease-in-out"
+            onClick={handleUploadFileBtnClick}
+          >
+            Upload image
+          </button>
+          <input
+            type="file"
+            className="invisible h-[1px] w-[1px]"
+            ref={uploadFileInputRef}
+            onChange={handleFileUploadOnChange}
+          />
         </div>
       </div>
+      <RecentProducts />
     </div>
   );
 };
