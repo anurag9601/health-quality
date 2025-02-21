@@ -1,4 +1,4 @@
-import { getImageURLAndGiveResponse } from "@/lib/ai-agent";
+import { getImageURLAndGiveResponse } from "@/lib/ai-model";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {

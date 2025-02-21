@@ -13,7 +13,7 @@ const UploadImageView: React.FC<PropsType> = ({
   setFile,
   imagePreview,
 }) => {
-  const [loading, setLoading] = React.useState<boolean>(true);
+  const [loading, setLoading] = React.useState<boolean>(false);
 
   const convertResponseDataToJSON = (response: string) => {
     const innerJsonString = response
@@ -26,6 +26,8 @@ const UploadImageView: React.FC<PropsType> = ({
     return realJsonObject;
   };
   const handleUserUploadRequest = async () => {
+    setLoading(true);
+
     const data = new FormData();
     data.set("file", file);
 
@@ -38,6 +40,7 @@ const UploadImageView: React.FC<PropsType> = ({
 
     const realJson = await convertResponseDataToJSON(response.response);
 
+    setLoading(false);
     console.log(realJson);
   };
   return (
