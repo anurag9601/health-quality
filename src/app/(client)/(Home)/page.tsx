@@ -2,10 +2,14 @@
 import HomeNav from "@/components/HomeNav/HomeNav";
 import RecentProducts from "@/components/RecentProducts/RecentProducts";
 import UploadImageView from "@/components/UploadImageView/UploadImageView";
+import { UserContext } from "@/context/userContext";
 import Image from "next/image";
-import React, { ChangeEvent } from "react";
+import { redirect } from "next/navigation";
+import React, { ChangeEvent, useContext, useEffect } from "react";
 
 const Home = () => {
+  const { user } = useContext(UserContext);
+
   const [file, setFile] = React.useState<File | null>(null);
 
   const [imagePreview, setImagePreview] = React.useState<string | null>(null);
@@ -14,7 +18,7 @@ const Home = () => {
 
   const handleFileUploadOnChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
-      const file = e.target.files[0]; 
+      const file = e.target.files[0];
       if (file.type.split("/")[0] !== "image") {
         alert("Upload file is not an image..");
         return;
@@ -31,6 +35,10 @@ const Home = () => {
     }
   };
 
+  if (!user) {
+    redirect("/signin");
+  }
+
   return (
     <div className="min-h-dvh w-full bg-orange-50 overflow-x-hidden">
       {file && imagePreview && (
@@ -43,7 +51,13 @@ const Home = () => {
       <HomeNav />
       <div className="flex flex-col sm:flex-row align-start justify-center gap-[10px] pl-[20%] pr-[20%] mt-[20px]">
         <label className="cursor-pointer">
-          <Image src={"/camera.png"} alt="" width={250} height={250} className="w-[180px] h-[180px] md:w-[250px] md:h-[250px]"/>
+          <Image
+            src={"/camera.png"}
+            alt=""
+            width={250}
+            height={250}
+            className="w-[180px] h-[180px] md:w-[250px] md:h-[250px]"
+          />
           <input
             type="file"
             capture="user"

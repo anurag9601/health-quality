@@ -1,7 +1,22 @@
+"use client";
 import Image from "next/image";
-import React from "react";
+import React, { useContext } from "react";
+import { redirect } from "next/navigation";
+import { UserContext } from "@/context/userContext";
 
 const HomeNav = () => {
+  const { setUser } = useContext(UserContext);
+
+  const handleUserSignOut = async () => {
+    const request = await fetch("/api/signout");
+
+    const response = await request.json();
+
+    if (response.success === true) {
+      setUser(null);
+      redirect("/signin");
+    }
+  };
   return (
     <div className="w-full">
       <div className="w-full pl-[10%] pr-[10%] pt-[5px] pb-[5px] flex items-center justify-between">
@@ -13,7 +28,10 @@ const HomeNav = () => {
           Expiry alert
         </p>
         <div className="font-head flex items-center gap-[15px]">
-          <button className="bg-gradient-to-r from-yellow-500 to-red-500 pt-[5px] pb-[5px] pl-[25px] pr-[25px] sm:text-[14px] lg:text-[17px] font-medium rounded-md border hover:border-black transition-all duration-300 ease-in-out">
+          <button
+            className="bg-gradient-to-r from-yellow-500 to-red-500 pt-[5px] pb-[5px] pl-[25px] pr-[25px] sm:text-[14px] lg:text-[17px] font-medium rounded-md border hover:border-black transition-all duration-300 ease-in-out"
+            onClick={handleUserSignOut}
+          >
             Sign Out
           </button>
         </div>

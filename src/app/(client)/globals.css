@@ -22,3 +22,18 @@
 .spin-animation{
     animation: spin .8s linear infinite;
 }
+
+@keyframes slide{
+    0%{
+        transform: translateY(10px);
+        opacity: 0;
+    }
+    100%{
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.slide-animation{
+    animation: slide .5s ease-in-out;
+}
