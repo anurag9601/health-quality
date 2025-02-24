@@ -8,7 +8,7 @@ import { redirect } from "next/navigation";
 import React, { ChangeEvent, useContext, useEffect } from "react";
 
 const Home = () => {
-  const { user } = useContext(UserContext);
+  const { setUser } = useContext(UserContext);
 
   const [file, setFile] = React.useState<File | null>(null);
 
@@ -35,9 +35,21 @@ const Home = () => {
     }
   };
 
-  if (!user) {
-    redirect("/signin");
-  }
+  const handleGetCurrentUser = React.useCallback(async () => {
+    const request = await fetch("/api/me");
+
+    const response = await request.json();
+
+    if (response.data) {
+      setUser(response.data);
+    } else {
+      redirect("/signin");
+    }
+  }, [setUser]);
+
+  useEffect(() => {
+    handleGetCurrentUser();
+  }, [handleGetCurrentUser]);
 
   return (
     <div className="min-h-dvh w-full bg-orange-50 overflow-x-hidden">
