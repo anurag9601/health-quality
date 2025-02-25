@@ -20,6 +20,11 @@ const userAddProductSchema = new Schema({
         type: String,
         required: true
     },
+    productImgURL: {
+        type: String,
+        required: true,
+        default: ""
+    },
     productInfo: {
         Ingredients_Information: {
             type: [ingredientsInfoSchema],

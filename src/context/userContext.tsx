@@ -5,6 +5,7 @@ import React, { Dispatch, ReactNode, SetStateAction } from "react";
 export interface userDataType {
   id: number;
   email: string;
+  continueWith: string;
 }
 
 interface userContextDataType {

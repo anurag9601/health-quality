@@ -1,6 +1,7 @@
 "use client";
 import AuthNav from "@/components/AuthNav/AuthNav";
 import { UserContext } from "@/context/userContext";
+import { handleUserGoogleAuth } from "@/services/authProvider";
 import { redirect, useRouter } from "next/navigation";
 import React, { FormEvent, useContext } from "react";
 import { IoLogoGoogle } from "react-icons/io";
@@ -87,6 +88,11 @@ const SignUp = () => {
             !wait && "hover:bg-orange-200"
           } transition-all duration-200 ease-in-out ${wait && "opacity-[30%]"}`}
           disabled={wait}
+          type="button"
+          onClick={() => {
+            setWait(true);
+            handleUserGoogleAuth();
+          }}
         >
           <IoLogoGoogle className="text-[22px]" /> Continue with google
         </button>

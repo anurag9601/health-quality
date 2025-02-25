@@ -33,7 +33,8 @@ export async function POST(req: NextRequest) {
 
         const payload = {
             id: newUser.id,
-            email: newUser.email
+            email: newUser.email,
+            continueWith: newUser.continueWith
         }
 
         const token = createJWTToken(payload);

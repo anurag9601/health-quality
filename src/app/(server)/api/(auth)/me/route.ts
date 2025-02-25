@@ -1,31 +1,49 @@
-import { decryptJWT, verifyJWTToken } from "@/services/jwt";
+import { decryptJWT, verifyJWTInEdge } from "@/services/jwt";
 import { NextRequest, NextResponse } from "next/server";
-
-export interface customRequest extends NextRequest {
-    user?: any;
-}
-
-export function GET(req: customRequest) {
+export async function GET(req: NextRequest) {
     try {
         const encryptToken = req.cookies.get("session_cookie");
 
         if (!encryptToken) {
-            return NextResponse.json({ error: "Token not found" }, { status: 400 });
+            const response = NextResponse.json({ error: "Token not found" }, { status: 400 });
+
+            response.cookies.set("session_cookie", "", {
+                path: "/",
+                expires: new Date(0),
+            });
+
+            return response;
         }
 
-        const decryptToken = decryptJWT(encryptToken.value);
+        const decryptPayload = decryptJWT(encryptToken.value);
 
-        const verify = verifyJWTToken(decryptToken) as any;
+        if (!decryptPayload) {
+            const response = NextResponse.json({ error: "Invalid token" }, { status: 401 });
+
+            response.cookies.set("session_cookie", "", {
+                path: "/",
+                expires: new Date(0),
+            });
+
+            return response;
+        }
+
+        const verify = await verifyJWTInEdge(decryptPayload);
 
         if (!verify) {
-            return NextResponse.json({ error: "Invalid token" }, { status: 401 });
-        }
+            const response = NextResponse.json({ error: "Invalid token" }, { status: 401 });
 
-        req.user = verify;
+            response.cookies.set("session_cookie", "", {
+                path: "/",
+                expires: new Date(0),
+            });
+
+            return response;
+        }
 
         return NextResponse.json({ data: verify }, { status: 200 });
     } catch (err) {
-        console.log(`Error in /api/signin route ${err}`);
+        console.log(`Error in /api/me route ${err}`);
         return NextResponse.json({ error: "Internal server error" }, { status: 500 })
     }
 }
