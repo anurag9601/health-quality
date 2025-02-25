@@ -3,12 +3,13 @@ import HomeNav from "@/components/HomeNav/HomeNav";
 import RecentProducts from "@/components/RecentProducts/RecentProducts";
 import UploadImageView from "@/components/UploadImageView/UploadImageView";
 import { UserContext } from "@/context/userContext";
+import { getGoogleSignInUserData } from "@/services/authProvider";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import React, { ChangeEvent, useContext, useEffect } from "react";
 
 const Home = () => {
-  const { setUser } = useContext(UserContext);
+  const { user , setUser } = useContext(UserContext);
 
   const [file, setFile] = React.useState<File | null>(null);
 
@@ -47,9 +48,29 @@ const Home = () => {
     }
   }, [setUser]);
 
+  const handleSetGoogleAuthUser = async () => {
+    const userData: any = await getGoogleSignInUserData();
+
+    if (userData) {
+      const userPayload = {
+        id: null,
+        email: userData.user.email,
+        continueWith: "google",
+      };
+
+      setUser(userPayload);
+    }
+  };
+
   useEffect(() => {
     handleGetCurrentUser();
-  }, [handleGetCurrentUser]);
+  }, []);
+
+  useEffect(() => {
+    handleSetGoogleAuthUser();
+  }, []);
+
+  console.log(user);
 
   return (
     <div className="min-h-dvh w-full bg-orange-50 overflow-x-hidden">

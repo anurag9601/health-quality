@@ -3,7 +3,7 @@
 import React, { Dispatch, ReactNode, SetStateAction } from "react";
 
 export interface userDataType {
-  id: number;
+  id: number | null;
   email: string;
   continueWith: string;
 }

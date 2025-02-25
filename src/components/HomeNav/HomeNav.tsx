@@ -3,9 +3,11 @@ import Image from "next/image";
 import React, { useContext } from "react";
 import { redirect } from "next/navigation";
 import { UserContext } from "@/context/userContext";
+import { signOut } from "@/auth";
+import { handleUserGoogleSignOut } from "@/services/authProvider";
 
 const HomeNav = () => {
-  const { setUser } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
 
   const handleUserSignOut = async () => {
     const request = await fetch("/api/signout");
@@ -28,12 +30,21 @@ const HomeNav = () => {
           Expiry alert
         </p>
         <div className="font-head flex items-center gap-[15px]">
-          <button
-            className="bg-gradient-to-r from-yellow-500 to-red-500 pt-[5px] pb-[5px] pl-[25px] pr-[25px] sm:text-[14px] lg:text-[17px] font-medium rounded-md border hover:border-black transition-all duration-300 ease-in-out"
-            onClick={handleUserSignOut}
-          >
-            Sign Out
-          </button>
+          {user && user.continueWith === "google" ? (
+            <button
+              className="bg-gradient-to-r from-yellow-500 to-red-500 pt-[5px] pb-[5px] pl-[25px] pr-[25px] sm:text-[14px] lg:text-[17px] font-medium rounded-md border hover:border-black transition-all duration-300 ease-in-out"
+              onClick={async () => await handleUserGoogleSignOut()}
+            >
+              Sign Out
+            </button>
+          ) : (
+            <button
+              className="bg-gradient-to-r from-yellow-500 to-red-500 pt-[5px] pb-[5px] pl-[25px] pr-[25px] sm:text-[14px] lg:text-[17px] font-medium rounded-md border hover:border-black transition-all duration-300 ease-in-out"
+              onClick={handleUserSignOut}
+            >
+              Sign Out
+            </button>
+          )}
         </div>
       </div>
       <hr className="h-[1px] w-full bg-gray-500 border-none" />

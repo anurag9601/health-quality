@@ -89,7 +89,7 @@ const SignUp = () => {
           } transition-all duration-200 ease-in-out ${wait && "opacity-[30%]"}`}
           disabled={wait}
           type="button"
-          onClick={() => {
+          onClick={async () => {
             setWait(true);
             handleUserGoogleAuth();
           }}
