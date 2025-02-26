@@ -9,7 +9,7 @@ import { redirect } from "next/navigation";
 import React, { ChangeEvent, useContext, useEffect } from "react";
 
 const Home = () => {
-  const { user , setUser } = useContext(UserContext);
+  const { setUser } = useContext(UserContext);
 
   const [file, setFile] = React.useState<File | null>(null);
 
@@ -69,8 +69,6 @@ const Home = () => {
   useEffect(() => {
     handleSetGoogleAuthUser();
   }, []);
-
-  console.log(user);
 
   return (
     <div className="min-h-dvh w-full bg-orange-50 overflow-x-hidden">

@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
     try {
-        const { userEmail, productImgURL, productInfo, Overall_Health_Assessment, Product_Details } = await req.json();
+        const { userEmail, productImgURL, Ingredients_Information, Overall_Health_Assessment, Product_Details } = await req.json();
 
         let user = await userAllProducts.findOne({ user: userEmail });
 
@@ -18,14 +18,14 @@ export async function POST(req: NextRequest) {
         const newProduct = await userProduct.create({
             userEmail,
             productImgURL,
-            productInfo,
+            Ingredients_Information,
             Overall_Health_Assessment,
             Product_Details
         })
 
-        user.products.push(newProduct._id);
+        await user.products.push(newProduct._id);
 
-        user.save();
+        await user.save();
 
         return NextResponse.json({ products: user }, { status: 200 });
     } catch (err) {

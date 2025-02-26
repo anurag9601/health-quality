@@ -25,11 +25,9 @@ const userAddProductSchema = new Schema({
         required: true,
         default: ""
     },
-    productInfo: {
-        Ingredients_Information: {
-            type: [ingredientsInfoSchema],
-            default: []
-        }
+    Ingredients_Information: {
+        type: [ingredientsInfoSchema],
+        default: []
     },
     Overall_Health_Assessment: {
         healthy: {
