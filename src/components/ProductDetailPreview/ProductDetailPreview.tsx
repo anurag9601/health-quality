@@ -1,6 +1,7 @@
 "use client";
+import { UserContext } from "@/context/userContext";
 import Image from "next/image";
-import React, { Dispatch, SetStateAction } from "react";
+import React, { Dispatch, SetStateAction, useContext } from "react";
 import { AiOutlineFullscreenExit } from "react-icons/ai";
 import { FaCheckCircle } from "react-icons/fa";
 import { MdCancel } from "react-icons/md";
@@ -18,8 +19,18 @@ const ProductDetailPreview: React.FC<productDetailPreviewPropTypes> = ({
   currentDataPayload,
   setCurrentDataPayload,
 }) => {
+  const { setUserAllProduct } = useContext(UserContext);
+
+  const [loading, setLoading] = React.useState(false);
+
   const [imgPreviewWindowOpen, setImgPreviewWindowOpen] =
     React.useState<boolean>(false);
+
+  const handleUserHomePageRedirect = () => {
+    setFile(null);
+    setCurrentDataPayload(null);
+    setImgPreviewWindowOpen(false);
+  };
 
   const generateFileURLFromCloudinary = async (file: File) => {
     try {
@@ -46,6 +57,8 @@ const ProductDetailPreview: React.FC<productDetailPreviewPropTypes> = ({
   };
 
   const pushProductDataInDB = async () => {
+    setLoading(true);
+
     const productImgURL = await generateFileURLFromCloudinary(file);
 
     currentDataPayload.productImgURL = productImgURL;
@@ -57,16 +70,13 @@ const ProductDetailPreview: React.FC<productDetailPreviewPropTypes> = ({
 
     const dataBaseResponse = await dataBaseRequest.json();
 
-    console.log(dataBaseResponse);
-  };
+    if (dataBaseResponse.addProduct) {
+      setUserAllProduct((prev: any) => [...prev, dataBaseResponse.addProduct]);
+      handleUserHomePageRedirect();
+    }
 
-  const handleUserCancelBtnClick = () => {
-    setFile(null);
-    setCurrentDataPayload(null);
-    setImgPreviewWindowOpen(false);
+    setLoading(false);
   };
-
-  console.log("console log in preview page", currentDataPayload);
   return (
     <div className="h-full w-full bg-orange-50 rounded-lg">
       {imgPreviewWindowOpen && (
@@ -203,17 +213,31 @@ const ProductDetailPreview: React.FC<productDetailPreviewPropTypes> = ({
       </div>
       <div className="w-full flex items-center gap-[20px] justify-end pl-[5%] pr-[5%] pt-[8px] pb-[8px] fixed bottom-[0px] border-t border-gray-500 bg-transparent backdrop-blur-sm">
         <button
-          className="h-[35px] pl-[20px] pr-[20px] pt-[5px] pb-[5px] rounded-lg text-lg border-dotted border-[2px] border-orange-700 flex items-center justify-center hover:border-solid hover:border-orange-500"
-          onClick={handleUserCancelBtnClick}
+          className={`h-[35px] pl-[20px] pr-[20px] pt-[5px] pb-[5px] rounded-lg text-lg border-dotted border-[2px] border-orange-700 flex items-center justify-center ${
+            !loading
+              ? "hover:border-solid hover:border-orange-500"
+              : "opacity-[.5]"
+          }`}
+          onClick={handleUserHomePageRedirect}
+          disabled={loading}
         >
           Cancel
         </button>
         <button
-          className="h-[35px] bg-gradient-to-r from-amber-400 to-orange-600 px-6 py-2 rounded-lg text-lg flex items-center justify-center 
-  bg-[length:200%_200%] bg-left transition-all duration-500 ease-in-out 
-  hover:from-orange-600 hover:to-amber-400 hover:bg-right"
+          className={`h-[35px] bg-gradient-to-r from-amber-400 to-orange-600 px-6 py-2 rounded-lg text-lg flex items-center justify-center 
+  bg-[length:200%_200%] bg-left transition-all duration-500 ${
+    !loading
+      ? "ease-in-out hover:from-orange-600 hover:to-amber-400 hover:bg-right"
+      : "opacity-[.5]"
+  } flex items-center justify-center`}
+          onClick={pushProductDataInDB}
+          disabled={loading}
         >
-          Add
+          {loading ? (
+            <div className="h-[20px] w-[20px] rounded-full border border-[3px] border-t-orange-500 border-t-[3px] spin-animation"></div>
+          ) : (
+            "Add"
+          )}
         </button>
       </div>
     </div>

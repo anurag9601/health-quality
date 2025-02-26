@@ -1,8 +1,28 @@
+"use client";
+import { UserContext } from "@/context/userContext";
 import Image from "next/image";
-import React from "react";
+import { redirect } from "next/navigation";
+import React, { useContext } from "react";
+import { AiOutlineProduct } from "react-icons/ai";
 import { FaCircleCheck } from "react-icons/fa6";
+import { MdCancel } from "react-icons/md";
 
-const RecentProducts = () => {
+interface RecentProductsPropsType {
+  productLoading: boolean;
+}
+
+const RecentProducts: React.FC<RecentProductsPropsType> = ({
+  productLoading,
+}) => {
+  const { userAllProduct, setCurrentOpenProduct } = useContext(UserContext);
+
+  const handleProductOnClick = (product: any) => {
+    setCurrentOpenProduct(product);
+    redirect(`/product/${product._id}`);
+  };
+
+  console.log(userAllProduct)
+
   return (
     <div className="pl-[10%] pr-[10%]">
       <div className="flex items-start gap-[10px]">
@@ -10,30 +30,65 @@ const RecentProducts = () => {
         <Image src="/healthy-food.png" alt="" width={40} height={40} />
       </div>
       <hr className="h-[1px] w-full bg-gray-500 border-none mt-[10px]" />
-      <div className="h-full w-full">
-        <div className="h-full w-full flex items-center justify-between pl-[3%] pr-[3%] pt-[10px] pb-[10px] hover:bg-orange-200 cursor-pointer transition-all duration-200 ease-in-out">
-          <div className="w-fit flex items-center gap-[10px] md:gap-[20px]">
-            <FaCircleCheck className="text-xl md:text-2xl text-lime-600" />
-            <p className="font-head text-lg">Product name</p>
-          </div>
-          <div className="hidden sm:hidden md:flex items-center gap-[40px] font-head">
-            <p>
-              <span className="text-teal-600 font-semibold">Healthy:</span> 30%
-            </p>
-            <p>
-              <span className="text-red-600 font-semibold">Unhealthy:</span> 70%
-            </p>
-          </div>
-          <Image
-            src={"/delete.png"}
-            alt=""
-            height={30}
-            width={30}
-            className="cursor-pointer h-[25px] w-[25px] md:h-[30px] md:w-[30px]"
-          />
+      {productLoading === true ? (
+        <div className="flex items-center justify-center">
+          <div className="border border-[4px] h-[50px] w-[50px] border-t-orange-500 border-t-[4px] rounded-full spin-animation mt-[30px] mb-[30px]"></div>
         </div>
-        <hr className="h-[1px] w-full bg-gray-500 border-none" />
-      </div>
+      ) : (
+        <>
+          {userAllProduct.length === 0 ? (
+            <div className="p-[30px] flex flex-col items-center justify-center gap-[5px]">
+              <span className="text-[25px] sm:text-[35px]">
+                <AiOutlineProduct />
+              </span>
+              <p className="font-head text-sm sm:text-lg">You have not added any products yet.</p>
+            </div>
+          ) : (
+            <>
+              {userAllProduct.map((product: any, index: number) => (
+                <div
+                  className="h-full w-full"
+                  key={index}
+                  onClick={() => handleProductOnClick(product)}
+                >
+                  <div className="h-full w-full flex items-center justify-between pl-[3%] pr-[3%] pt-[10px] pb-[10px] hover:bg-orange-200 cursor-pointer transition-all duration-200 ease-in-out">
+                    <div className="w-fit flex items-center gap-[10px] md:gap-[20px]">
+                      {product.Overall_Health_Assessment.healthy ? (
+                        <FaCircleCheck className="text-[20px] md:text-[20px] text-lime-600" />
+                      ) : (
+                        <MdCancel className="text-[23px] md:text-[23px] text-red-600" />
+                      )}
+                      <p className="font-head text-lg">
+                        {product.Product_Details.product_name.slice(0, 20)}
+                        {product.Product_Details.product_name.length > 20 &&
+                          "..."}
+                      </p>
+                    </div>
+                    {/* <div className="hidden sm:hidden md:flex items-center gap-[40px] font-head">
+                <p>
+                  <span className="text-teal-600 font-semibold">Healthy:</span>{" "}
+                  30%
+                </p>
+                <p>
+                  <span className="text-red-600 font-semibold">Unhealthy:</span>{" "}
+                  70%
+                </p>
+              </div> */}
+                    <Image
+                      src={"/delete.png"}
+                      alt=""
+                      height={30}
+                      width={30}
+                      className="cursor-pointer h-[25px] w-[25px] md:h-[30px] md:w-[30px]"
+                    />
+                  </div>
+                  <hr className="h-[1px] w-full bg-gray-500 border-none" />
+                </div>
+              ))}
+            </>
+          )}
+        </>
+      )}
     </div>
   );
 };

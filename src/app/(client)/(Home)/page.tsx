@@ -9,11 +9,13 @@ import { redirect } from "next/navigation";
 import React, { ChangeEvent, useContext, useEffect } from "react";
 
 const Home = () => {
-  const { setUser } = useContext(UserContext);
+  const { user, setUser, setUserAllProduct } = useContext(UserContext);
 
   const [file, setFile] = React.useState<File | null>(null);
 
   const [imagePreview, setImagePreview] = React.useState<string | null>(null);
+
+  const [productLoading, setProductLoading] = React.useState<boolean>(false);
 
   const uploadFileInputRef = React.useRef<HTMLInputElement | null>(null);
 
@@ -62,6 +64,27 @@ const Home = () => {
     }
   };
 
+  const handleGetCurrentUserAllProductsData = async () => {
+    if (!user) return;
+
+    setProductLoading(true);
+
+    const request = await fetch("/api/product/all", {
+      method: "POST",
+      body: JSON.stringify({
+        userEmail: user.email,
+      }),
+    });
+
+    const response = await request.json();
+
+    if (response && response.allProductsData) {
+      setUserAllProduct(response.allProductsData.products);
+    }
+
+    setProductLoading(false);
+  };
+
   useEffect(() => {
     handleGetCurrentUser();
   }, []);
@@ -69,6 +92,10 @@ const Home = () => {
   useEffect(() => {
     handleSetGoogleAuthUser();
   }, []);
+
+  useEffect(() => {
+    handleGetCurrentUserAllProductsData();
+  }, [user]);
 
   return (
     <div className="min-h-dvh w-full bg-orange-50 overflow-x-hidden">
@@ -116,7 +143,7 @@ const Home = () => {
           />
         </div>
       </div>
-      <RecentProducts />
+      <RecentProducts productLoading={productLoading} />
     </div>
   );
 };

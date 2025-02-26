@@ -3,7 +3,6 @@ import Image from "next/image";
 import React, { useContext } from "react";
 import { redirect } from "next/navigation";
 import { UserContext } from "@/context/userContext";
-import { signOut } from "@/auth";
 import { handleUserGoogleSignOut } from "@/services/authProvider";
 
 const HomeNav = () => {
