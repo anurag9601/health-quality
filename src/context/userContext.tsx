@@ -1,5 +1,4 @@
 "use client";
-
 import React, { Dispatch, ReactNode, SetStateAction } from "react";
 
 export interface userDataType {
@@ -8,13 +7,41 @@ export interface userDataType {
   continueWith: string;
 }
 
+export interface ProductDetails {
+  product_name?: string;
+  expiry_date?: string;
+  manufacture_date?: string;
+}
+
+export interface HealthAssessment {
+  healthy: boolean;
+  overall_health_assessment?: string;
+}
+
+export interface Ingredient {
+  name: string;
+  healthy: boolean;
+  description: string;
+  not_good_for?: string;
+}
+
+export interface UserProduct {
+  _id: string;
+  Product_Details: ProductDetails;
+  Overall_Health_Assessment: HealthAssessment;
+  Ingredients_Information: Ingredient[];
+  productImgURL: string;
+}
+
 interface userContextDataType {
   user: userDataType | null;
   setUser: Dispatch<SetStateAction<userDataType | null>>;
-  userAllProduct: any;
-  setUserAllProduct: Dispatch<SetStateAction<any>>;
-  currentOpenProduct: any;
-  setCurrentOpenProduct: Dispatch<SetStateAction<any>>;
+  userAllProduct: UserProduct[] | [];
+  setUserAllProduct: Dispatch<SetStateAction<UserProduct[]>>;
+  currentOpenProduct: UserProduct | null;
+  setCurrentOpenProduct: Dispatch<
+    SetStateAction<UserProduct | null>
+  >;
 }
 
 export const UserContext = React.createContext<userContextDataType>({
@@ -29,9 +56,12 @@ export const UserContext = React.createContext<userContextDataType>({
 const UserProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = React.useState<userDataType | null>(null);
 
-  const [userAllProduct, setUserAllProduct] = React.useState<any>([]);
+  const [userAllProduct, setUserAllProduct] = React.useState<
+    UserProduct[] | []
+  >([]);
 
-  const [currentOpenProduct, setCurrentOpenProduct] = React.useState<any>(null);
+  const [currentOpenProduct, setCurrentOpenProduct] =
+    React.useState<UserProduct | null>(null);
 
   const values = {
     user,

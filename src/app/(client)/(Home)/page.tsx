@@ -85,7 +85,7 @@ const Home = () => {
 
   useEffect(() => {
     handleGetCurrentUser();
-  }, []);
+  }, [handleGetCurrentUser]);
 
   useEffect(() => {
     handleSetGoogleAuthUser();

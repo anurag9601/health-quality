@@ -1,5 +1,10 @@
 "use client";
-import { UserContext } from "@/context/userContext";
+import {
+  HealthAssessment,
+  Ingredient,
+  ProductDetails,
+  UserContext,
+} from "@/context/userContext";
 import Image from "next/image";
 import React, { Dispatch, SetStateAction, useContext } from "react";
 import ProductDetailPreview from "../ProductDetailPreview/ProductDetailPreview";
@@ -8,6 +13,13 @@ interface PropsType {
   file: File;
   setFile: Dispatch<SetStateAction<File | null>>;
   imagePreview: string;
+}
+
+export interface CurrentDataPayload {
+  Product_Details: ProductDetails;
+  Overall_Health_Assessment: HealthAssessment;
+  Ingredients_Information: Ingredient[];
+  productImgURL: string;
 }
 
 const UploadImageView: React.FC<PropsType> = ({
@@ -19,9 +31,8 @@ const UploadImageView: React.FC<PropsType> = ({
 
   const [loading, setLoading] = React.useState<boolean>(false);
 
-  const [currentDataPayload, setCurrentDataPayload] = React.useState<
-    any | null
-  >(null);
+  const [currentDataPayload, setCurrentDataPayload] =
+    React.useState<CurrentDataPayload | null>(null);
 
   const convertResponseDataToJSON = (response: string) => {
     const innerJsonString = response

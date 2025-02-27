@@ -1,16 +1,17 @@
 "use client";
-import { UserContext } from "@/context/userContext";
+import { Ingredient, UserContext } from "@/context/userContext";
 import Image from "next/image";
 import React, { Dispatch, SetStateAction, useContext } from "react";
 import { AiOutlineFullscreenExit } from "react-icons/ai";
 import { FaCheckCircle } from "react-icons/fa";
 import { MdCancel } from "react-icons/md";
+import { CurrentDataPayload } from "../UploadImageView/UploadImageView";
 
 interface productDetailPreviewPropTypes {
   file: File;
   setFile: Dispatch<SetStateAction<File | null>>;
-  currentDataPayload: any | null;
-  setCurrentDataPayload: Dispatch<SetStateAction<any | null>>;
+  currentDataPayload: CurrentDataPayload;
+  setCurrentDataPayload: Dispatch<SetStateAction<CurrentDataPayload | null>>;
 }
 
 const ProductDetailPreview: React.FC<productDetailPreviewPropTypes> = ({
@@ -72,7 +73,7 @@ const ProductDetailPreview: React.FC<productDetailPreviewPropTypes> = ({
     const dataBaseResponse = await dataBaseRequest.json();
 
     if (dataBaseResponse.addProduct) {
-      setUserAllProduct((prev: any) => [...prev, dataBaseResponse.addProduct]);
+      setUserAllProduct((prev) => [...prev, dataBaseResponse.addProduct]);
       handleUserHomePageRedirect();
     }
 
@@ -170,7 +171,7 @@ const ProductDetailPreview: React.FC<productDetailPreviewPropTypes> = ({
             <hr className="h-[1px] w-full bg-gray-500 border-none" />
           </div>
           {currentDataPayload.Ingredients_Information.map(
-            (ingredient: any, index: number) => (
+            (ingredient: Ingredient, index: number) => (
               <div
                 className="flex flex-col gap-[4px] bg-orange-100 rounded-lg pt-[10px] pb-[10px] pl-[10px] pr-[10px]"
                 key={index}

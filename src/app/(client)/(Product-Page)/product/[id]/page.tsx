@@ -1,5 +1,5 @@
 "use client";
-import { UserContext } from "@/context/userContext";
+import { Ingredient, UserContext } from "@/context/userContext";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import React, { useContext } from "react";
@@ -109,7 +109,7 @@ const ProductPage = () => {
             <hr className="h-[1px] w-full bg-gray-500 border-none" />
           </div>
           {currentOpenProduct.Ingredients_Information.map(
-            (ingredient: any, index: number) => (
+            (ingredient: Ingredient, index: number) => (
               <div
                 className="flex flex-col gap-[4px] bg-orange-100 rounded-lg pt-[10px] pb-[10px] pl-[10px] pr-[10px]"
                 key={index}

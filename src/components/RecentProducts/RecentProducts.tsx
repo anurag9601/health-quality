@@ -1,5 +1,5 @@
 "use client";
-import { UserContext } from "@/context/userContext";
+import { UserContext, UserProduct } from "@/context/userContext";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import React, { useContext } from "react";
@@ -21,7 +21,7 @@ const RecentProducts: React.FC<RecentProductsPropsType> = ({
 
   const deleteBtnClick = React.useRef<boolean>(false);
 
-  const handleProductOnClick = (product: any) => {
+  const handleProductOnClick = (product: UserProduct) => {
     if (deleteBtnClick.current || deleteId) return;
 
     setCurrentOpenProduct(product);
@@ -40,7 +40,7 @@ const RecentProducts: React.FC<RecentProductsPropsType> = ({
 
     if (respose.success === true) {
       const newUserAllProductsList = userAllProduct.filter(
-        (product: any) => product._id !== id
+        (product) => product._id !== id
       );
 
       setUserAllProduct(newUserAllProductsList);
@@ -48,6 +48,7 @@ const RecentProducts: React.FC<RecentProductsPropsType> = ({
       alert("Something went wrong...");
     }
     setDeleteId(null);
+    deleteBtnClick.current = false;
   };
 
   return (
@@ -76,7 +77,7 @@ const RecentProducts: React.FC<RecentProductsPropsType> = ({
             </div>
           ) : (
             <>
-              {userAllProduct.map((product: any, index: number) => (
+              {userAllProduct.map((product: UserProduct, index: number) => (
                 <div
                   className={`h-full w-full ${deleteId && "opacity-[.7]"}`}
                   key={index}
@@ -94,8 +95,9 @@ const RecentProducts: React.FC<RecentProductsPropsType> = ({
                         <MdCancel className="text-[23px] md:text-[23px] text-red-600" />
                       )}
                       <p className="font-head text-lg">
-                        {product.Product_Details.product_name.slice(0, 20)}
-                        {product.Product_Details.product_name.length > 20 &&
+                        {product.Product_Details.product_name?.slice(0, 20)}
+                        {product.Product_Details.product_name &&
+                          product.Product_Details.product_name.length > 20 &&
                           "..."}
                       </p>
                     </div>
