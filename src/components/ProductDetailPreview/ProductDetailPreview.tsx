@@ -52,6 +52,7 @@ const ProductDetailPreview: React.FC<productDetailPreviewPropTypes> = ({
       return uploadImageURL.url;
     } catch (err) {
       alert("Something went wrong while sending file on cloudinary");
+      console.log("Error in generateFileURLFromCloudinary function", err);
       return;
     }
   };

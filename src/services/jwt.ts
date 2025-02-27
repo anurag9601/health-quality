@@ -26,6 +26,7 @@ export function decryptJWT(encryptedToken: string) {
         }
         return decrypted;
     } catch (err) {
+        console.log("Error in decryptJWT function", err);
         return false;
     }
 }

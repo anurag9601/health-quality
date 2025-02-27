@@ -1,9 +1,9 @@
 import dbConnect from "@/mongodb/connectDB";
 import userAllProducts from "@/mongodb/userAllProducts.model";
 import userProduct from "@/mongodb/product.model";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(req: NextResponse) {
+export async function POST(req: NextRequest) {
     try {
         await dbConnect();
         const { userEmail } = await req.json();

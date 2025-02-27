@@ -20,8 +20,7 @@ export default async function dbConnect() {
 
         console.log("Mongoose connected successfully");
     } catch (err) {
-
-        console.log("Database got crashed");
+        console.log("Database got crashed", err);
         process.exit(1);
     }
 

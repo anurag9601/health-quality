@@ -1,7 +1,7 @@
 "use client";
 import { UserContext } from "@/context/userContext";
 import Image from "next/image";
-import { redirect, useParams } from "next/navigation";
+import { redirect } from "next/navigation";
 import React, { useContext } from "react";
 import { AiOutlineFullscreenExit } from "react-icons/ai";
 import { FaCheckCircle } from "react-icons/fa";

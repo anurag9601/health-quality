@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { decryptJWT, verifyJWTInEdge } from "./services/jwt";
 import { auth } from "@/auth";
 
