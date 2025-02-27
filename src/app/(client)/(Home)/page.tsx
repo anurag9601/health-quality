@@ -15,7 +15,7 @@ const Home = () => {
 
   const [imagePreview, setImagePreview] = React.useState<string | null>(null);
 
-  const [productLoading, setProductLoading] = React.useState<boolean>(false);
+  const [productLoading, setProductLoading] = React.useState<boolean>(true);
 
   const uploadFileInputRef = React.useRef<HTMLInputElement | null>(null);
 
@@ -66,8 +66,6 @@ const Home = () => {
 
   const handleGetCurrentUserAllProductsData = async () => {
     if (!user) return;
-
-    setProductLoading(true);
 
     const request = await fetch("/api/product/all", {
       method: "POST",

@@ -8,8 +8,6 @@ import { FaCheckCircle } from "react-icons/fa";
 import { MdCancel } from "react-icons/md";
 
 const ProductPage = () => {
-  const { id } = useParams();
-
   const { currentOpenProduct } = useContext(UserContext);
 
   if (!currentOpenProduct) {

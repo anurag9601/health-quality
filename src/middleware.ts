@@ -5,7 +5,7 @@ import { auth } from "@/auth";
 export default auth(async (req) => {
     const path = req.nextUrl.pathname;
 
-    const isProtectedPath = ["/"];
+    const isProtectedPath = ["/", "/product/:id"];
     const isPublicPath = ["/signin", "/signup"];
 
     if (req.auth) {
@@ -44,5 +44,5 @@ export default auth(async (req) => {
 });
 
 export const config = {
-    matcher: ["/", "/signin", "/signup"],
+    matcher: ["/", "/signin", "/signup" , "/product/:id"],
 };
