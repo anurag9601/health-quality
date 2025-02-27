@@ -1,5 +1,8 @@
 import { FlatCompat } from "@eslint/eslintrc";
 
+//docs
+// https://nextjs.org/docs/app/api-reference/config/eslint#disabling-rules
+
 const compat = new FlatCompat({
   // import.meta.dirname is available after Node.js v20.11.0
   baseDirectory: import.meta.dirname,

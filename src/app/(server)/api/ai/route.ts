@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
         const response = await getImageURLAndGiveResponse(imageBuffer, imageFile.type);
 
         if (!response) {
-            return NextResponse.json({ error: "Response not found something went wrong" }, { status: 400 });
+            return NextResponse.json({ error: true, message: "Response not found something went wrong" }, { status: 400 });
         }
 
         return NextResponse.json({ response }, { status: 200 });

@@ -105,7 +105,7 @@ const ProductPage = () => {
         <div className="mt-[20px] flex flex-col gap-[10px]">
           <div className="flex flex-col gap-[5px] items-center text-lg font-medium mb-[20px] pl-[5px] pr-[5px]">
             <hr className="h-[1px] w-full bg-gray-500 border-none" />
-            <h3>Ingredients Information</h3>
+            <h3 className="font-head">Ingredients Information</h3>
             <hr className="h-[1px] w-full bg-gray-500 border-none" />
           </div>
           {currentOpenProduct.Ingredients_Information.map(

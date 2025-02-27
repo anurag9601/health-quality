@@ -1,7 +1,7 @@
 "use client";
 import { UserContext, UserProduct } from "@/context/userContext";
 import Image from "next/image";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import React, { useContext } from "react";
 import { AiOutlineProduct } from "react-icons/ai";
 import { FaCircleCheck } from "react-icons/fa6";
@@ -14,6 +14,8 @@ interface RecentProductsPropsType {
 const RecentProducts: React.FC<RecentProductsPropsType> = ({
   productLoading,
 }) => {
+  const router = useRouter();
+
   const { userAllProduct, setUserAllProduct, setCurrentOpenProduct } =
     useContext(UserContext);
 
@@ -25,7 +27,7 @@ const RecentProducts: React.FC<RecentProductsPropsType> = ({
     if (deleteBtnClick.current || deleteId) return;
 
     setCurrentOpenProduct(product);
-    redirect(`/product/${product._id}`);
+    router.push(`/product/${product._id}`);
   };
 
   const handleUserDeleteProduct = async (id: string) => {

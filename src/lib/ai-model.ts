@@ -17,7 +17,8 @@ async function fileToGeneratePart(imageBuffer: Buffer<ArrayBufferLike>, mimeType
 
 export async function getImageURLAndGiveResponse(imageBuffer: Buffer<ArrayBufferLike>, mimeType: string) {
 
-    const PROMPT = `
+    try {
+        const PROMPT = `
     You are an AI agent specialized in providing detailed food ingredient information. Given an image of a product’s ingredient list, return a structured JSON object with the following details:
 
     Product Details:
@@ -38,9 +39,13 @@ export async function getImageURLAndGiveResponse(imageBuffer: Buffer<ArrayBuffer
     healthy: A single boolean value (true or false) indicating whether the product is healthy overall. If it contains more unhealthy ingredients than healthy ones, set this to false; otherwise, set it to true.
     `
 
-    const IMAGE_PART = await fileToGeneratePart(imageBuffer, mimeType);
+        const IMAGE_PART = await fileToGeneratePart(imageBuffer, mimeType);
 
-    const result = await model.generateContent([PROMPT, IMAGE_PART]);
+        const result = await model.generateContent([PROMPT, IMAGE_PART]);
 
-    return result.response.text();
+        return result.response.text();
+    } catch (error) {
+        console.log("Error in getImageURLAndGiveResponse function", error);
+        return false;
+    }
 }

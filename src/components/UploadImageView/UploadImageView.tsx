@@ -58,6 +58,11 @@ const UploadImageView: React.FC<PropsType> = ({
 
     const response = await request.json();
 
+    if (response.error === true) {
+      alert(response.message);
+      return;
+    }
+
     if (response) {
       const realJson = await convertResponseDataToJSON(response.response);
 
