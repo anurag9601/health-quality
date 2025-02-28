@@ -94,7 +94,7 @@ const ForgotPassword = () => {
         >
           <h3 className="font-head text-xl">Reset password</h3>
           <p className="font-head text-md mb-[10px]">
-            We'll email you a password reset link.
+            We&apos;tll email you a password reset link.
           </p>
           {errors.length > 0 && (
             <div className="h-fit w-full mt-[5px] mb-[5px] flex flex-col gap-[10px]">
