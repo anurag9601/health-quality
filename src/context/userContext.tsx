@@ -39,9 +39,9 @@ interface userContextDataType {
   userAllProduct: UserProduct[] | [];
   setUserAllProduct: Dispatch<SetStateAction<UserProduct[]>>;
   currentOpenProduct: UserProduct | null;
-  setCurrentOpenProduct: Dispatch<
-    SetStateAction<UserProduct | null>
-  >;
+  setCurrentOpenProduct: Dispatch<SetStateAction<UserProduct | null>>;
+  resetPasswordId: string | null;
+  setResetPasswordId: Dispatch<SetStateAction<string | null>>;
 }
 
 export const UserContext = React.createContext<userContextDataType>({
@@ -51,6 +51,8 @@ export const UserContext = React.createContext<userContextDataType>({
   setUserAllProduct: () => {},
   currentOpenProduct: null,
   setCurrentOpenProduct: () => {},
+  resetPasswordId: null,
+  setResetPasswordId: () => {},
 });
 
 const UserProvider = ({ children }: { children: ReactNode }) => {
@@ -63,6 +65,10 @@ const UserProvider = ({ children }: { children: ReactNode }) => {
   const [currentOpenProduct, setCurrentOpenProduct] =
     React.useState<UserProduct | null>(null);
 
+  const [resetPasswordId, setResetPasswordId] = React.useState<string | null>(
+    null
+  );
+
   const values = {
     user,
     setUser,
@@ -70,6 +76,8 @@ const UserProvider = ({ children }: { children: ReactNode }) => {
     setUserAllProduct,
     currentOpenProduct,
     setCurrentOpenProduct,
+    resetPasswordId,
+    setResetPasswordId,
   };
   return <UserContext.Provider value={values}>{children}</UserContext.Provider>;
 };
