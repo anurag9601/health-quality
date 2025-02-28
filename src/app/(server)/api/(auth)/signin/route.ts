@@ -1,6 +1,6 @@
 import { prismaClient } from "@/lib/prisma-client";
 import { NextRequest, NextResponse } from "next/server";
-import bcrypt from "bcryptjs";
+import bcrypt from "bcrypt";
 import { createJWTToken, encryptJWT } from "@/services/jwt";
 
 export async function POST(req: NextRequest) {

@@ -2,7 +2,7 @@
 import AuthNav from "@/components/AuthNav/AuthNav";
 import { UserContext } from "@/context/userContext";
 import { handleUserGoogleAuth } from "@/services/authProvider";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import React, { FormEvent, useContext } from "react";
 import { IoLogoGoogle } from "react-icons/io";
 import z from "zod";
@@ -60,7 +60,7 @@ const SignIn = () => {
       if (respose.data) {
         setUser(respose.data);
         setWait(false);
-        redirect("/");
+        route.push("/");
       } else if (respose.error) {
         setErrors((prev) => [...prev, respose.error]);
         setWait(true);
