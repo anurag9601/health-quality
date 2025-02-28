@@ -6,7 +6,7 @@ export default auth(async (req) => {
     const path = req.nextUrl.pathname;
 
     const isProtectedPath = ["/", "/product/:id"];
-    const isPublicPath = ["/signin", "/signup"];
+    const isPublicPath = ["/signin", "/signup", "/forgot-password"];
 
     if (req.auth) {
         if (isPublicPath.includes(path)) {
@@ -44,5 +44,5 @@ export default auth(async (req) => {
 });
 
 export const config = {
-    matcher: ["/", "/signin", "/signup" , "/product/:id"],
+    matcher: ["/", "/signin", "/signup", "/product/:id"],
 };

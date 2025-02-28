@@ -113,7 +113,7 @@ const SignIn = () => {
             ref={passwordRef}
           />
         </div>
-        <p className="text-[15px] font-head mt-[5px] cursor-pointer font-medium hover:underline">
+        <p className="text-[15px] font-head mt-[5px] cursor-pointer font-medium hover:underline" onClick={() => route.push("/forgot-password")}>
           Forgot password?
         </p>
         <button
