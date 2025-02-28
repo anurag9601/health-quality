@@ -1,6 +1,6 @@
 import { prismaClient } from "@/lib/prisma-client";
 import { NextRequest, NextResponse } from "next/server";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import { createJWTToken, encryptJWT } from "@/services/jwt";
 
 export async function POST(req: NextRequest) {
@@ -16,6 +16,10 @@ export async function POST(req: NextRequest) {
                 email
             }
         });
+
+        if (user && user.continueWith === "google") {
+            return NextResponse.json({ error: "You're already signed in with Google. Click 'Continue with Google' to proceed." });
+        }
 
         if (!user) {
             return NextResponse.json({ error: "email register user not found" }, { status: 400 });
