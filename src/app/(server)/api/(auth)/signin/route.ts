@@ -60,6 +60,6 @@ export async function POST(req: NextRequest) {
 
     } catch (err) {
         console.log(`Error in /api/signin route ${err}`);
-        return NextResponse.json({ error: "Internal server error" }, { status: 500 })
+        return NextResponse.json({ error: "Internal server error" }, { status: 500 });
     }
 }

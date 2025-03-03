@@ -21,7 +21,6 @@ export function decryptJWT(encryptedToken: string) {
         const decrypted = bytes.toString(cryptojs.enc.Utf8);
 
         if (!decrypted) {
-            console.error("Decryption failed. Possibly incorrect key or corrupt token.");
             return false;
         }
         return decrypted;

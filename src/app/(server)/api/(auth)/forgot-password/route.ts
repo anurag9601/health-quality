@@ -1,9 +1,26 @@
-import { NextRequest, NextResponse } from "next/server";
-import nodemailer from "nodemailer"
+import { prismaClient } from "@/lib/prisma-client";
+import { NextRequest, NextResponse, userAgent } from "next/server";
+import nodemailer from "nodemailer";
+import { v4 as uuidv4 } from "uuid";
 
 export async function POST(req: NextRequest) {
     try {
-        const { userEmail, id } = await req.json();
+        const { userEmail } = await req.json();
+
+        const passwordResetId = uuidv4();
+
+        let user = await prismaClient.user.update({
+            where: {
+                email: userEmail,
+            },
+            data: {
+                passwordResetId,
+            }
+        });
+
+        if (!user) {
+            return NextResponse.json({ success: false, error: "User not found" }, { status: 400 });
+        }
 
         const transporter = nodemailer.createTransport({
             service: "gmail",
@@ -20,7 +37,7 @@ export async function POST(req: NextRequest) {
             text: `You're receiving this e-mail because you or someone else has requested a password reset for your user account at .
 
         Click the link below to reset your password:
-        ${process.env.NEXTAUTH_URL}/new-password/${id}
+        ${process.env.NEXTAUTH_URL}/new-password/${passwordResetId}
 
         If you did not request a password reset you can safely ignore this email.`
         }
@@ -28,10 +45,10 @@ export async function POST(req: NextRequest) {
         const sendMail = await transporter.sendMail(mailOptions);
 
         if (sendMail) {
-            return NextResponse.json({ success: true }, { status: 200 })
+            return NextResponse.json({ success: true }, { status: 200 });
         }
 
-        return NextResponse.json({ success: false }, { status: 400 })
+        return NextResponse.json({ success: false, error: "Failed to send email" }, { status: 400 });
     } catch (err) {
         console.log(`Error in /api/me route ${err}`);
         return NextResponse.json({ error: "Internal server error" }, { status: 500 })

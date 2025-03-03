@@ -1,15 +1,11 @@
 "use client";
 import AuthNav from "@/components/AuthNav/AuthNav";
-import { UserContext } from "@/context/userContext";
 import React, { FormEvent, useContext } from "react";
 import { CiCircleCheck } from "react-icons/ci";
 import { FaLongArrowAltRight } from "react-icons/fa";
-import { v4 as uuidv4 } from "uuid";
 import z from "zod";
 
 const ForgotPassword = () => {
-  const { setResetPasswordId } = useContext(UserContext);
-
   const [emailSent, setEmailSent] = React.useState<boolean>(false);
 
   const [loading, setLoading] = React.useState<boolean>(false);
@@ -37,18 +33,12 @@ const ForgotPassword = () => {
 
     if (!emailRef.current || emailSent || loading) return;
 
-    const uuid = uuidv4();
-
-    setResetPasswordId(uuid);
-
     const data = {
       userEmail: emailRef.current.value,
-      id: uuid,
     };
 
     const sendDataVerify = z.object({
       userEmail: z.string().email(),
-      id: z.string(),
     });
 
     const verify = sendDataVerify.safeParse(data);

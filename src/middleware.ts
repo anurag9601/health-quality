@@ -6,10 +6,10 @@ export default auth(async (req) => {
     const path = req.nextUrl.pathname;
 
     const isProtectedPath = ["/", "/product/:id"];
-    const isPublicPath = ["/signin", "/signup", "/forgot-password"];
+    const isPublicPath = ["/signin", "/signup", "/forgot-password", "/new-password/:id"];
 
     if (req.auth) {
-        if (isPublicPath.includes(path)) {
+        if (isPublicPath.includes(path) || path.startsWith("/new-password")) {
             return NextResponse.redirect(new URL("/", req.nextUrl));
         }
         return NextResponse.next();
@@ -44,5 +44,5 @@ export default auth(async (req) => {
 });
 
 export const config = {
-    matcher: ["/", "/signin", "/signup", "/product/:id"],
+    matcher: ["/", "/signin", "/signup", "/forgot-password", "/product/:id", "/new-password/:id"],
 };

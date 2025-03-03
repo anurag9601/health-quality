@@ -4,7 +4,7 @@ import { UserContext } from "@/context/userContext";
 import { handleUserGoogleAuth } from "@/services/authProvider";
 import { useRouter } from "next/navigation";
 import React, { FormEvent, useContext } from "react";
-import { IoLogoGoogle } from "react-icons/io";
+import { IoIosEye, IoIosEyeOff, IoLogoGoogle } from "react-icons/io";
 import z from "zod";
 
 const SignIn = () => {
@@ -18,6 +18,8 @@ const SignIn = () => {
   const [errors, setErrors] = React.useState<string[] | []>([]);
 
   const [wait, setWait] = React.useState<boolean>(false);
+
+  const [showEnteredPass, setShowEnteredPass] = React.useState<boolean>(false);
 
   function clearErrors() {
     const timeOut = setTimeout(() => {
@@ -107,11 +109,24 @@ const SignIn = () => {
         </div>
         <div className="w-full mt-[5px]">
           <p className="font-head text-lg">Password..</p>
-          <input
-            type="password"
-            className="w-full h-[40px] rounded-md bg-amber-100 border-[1.5px] border-amber-700 outline-none font-normal pl-[15px] pr-[15px] text-md font-medium"
-            ref={passwordRef}
-          />
+          <div className="w-full h-[40px] rounded-md bg-amber-100 border-[1.5px] border-amber-700 outline-none font-normal pl-[15px] pr-[15px] text-md font-medium mb-[10px] flex items-center">
+            <input
+              type={`${showEnteredPass ? "text" : "password"}`}
+              ref={passwordRef}
+              className="h-full w-full bg-transparent border-none outline-none"
+            />
+            {showEnteredPass ? (
+              <IoIosEyeOff
+                className="text-lg cursor-pointer"
+                onClick={() => setShowEnteredPass((prev) => !prev)}
+              />
+            ) : (
+              <IoIosEye
+                className="text-xl cursor-pointer"
+                onClick={() => setShowEnteredPass((prev) => !prev)}
+              />
+            )}
+          </div>
         </div>
         <p
           className="text-[15px] font-head mt-[5px] cursor-pointer font-medium hover:underline"
