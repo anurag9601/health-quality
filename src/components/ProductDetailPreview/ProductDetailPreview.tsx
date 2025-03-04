@@ -101,7 +101,7 @@ const ProductDetailPreview: React.FC<productDetailPreviewPropTypes> = ({
         </div>
       )}
       <h3 className="w-full h-fit pt-[5px] pb-[5px] text-lg text-center pl-[5%] pr-[5%]">
-        {currentDataPayload.Product_Details.product_name
+        {currentDataPayload.Product_Details?.product_name
           ? currentDataPayload.Product_Details.product_name
           : "Product"}
       </h3>
@@ -113,7 +113,7 @@ const ProductDetailPreview: React.FC<productDetailPreviewPropTypes> = ({
               <span className="font-head font-medium text-lg bg-orange-300 pt-[0px] pb-[0px] pl-[7px] pr-[7px] rounded-md">
                 Healthy
               </span>
-              {currentDataPayload.Overall_Health_Assessment.healthy ? (
+              {currentDataPayload?.Overall_Health_Assessment?.healthy ? (
                 <FaCheckCircle className="text-lg text-green-600" />
               ) : (
                 <MdCancel className="text-lg text-red-500" />
@@ -125,8 +125,7 @@ const ProductDetailPreview: React.FC<productDetailPreviewPropTypes> = ({
               </span>
               <span className="text-sm">
                 {
-                  currentDataPayload.Overall_Health_Assessment
-                    .overall_health_assessment
+                  currentDataPayload.Overall_Health_Assessment?.overall_health_assessment
                 }
               </span>
             </div>
@@ -135,7 +134,7 @@ const ProductDetailPreview: React.FC<productDetailPreviewPropTypes> = ({
                 Expiry Date
               </span>
               <span className="font-normal text-sm">
-                {currentDataPayload.Product_Details.expiry_date
+                {currentDataPayload.Product_Details?.expiry_date
                   ? currentDataPayload.Product_Details.expiry_date
                   : "unavailable..."}
               </span>
@@ -145,7 +144,7 @@ const ProductDetailPreview: React.FC<productDetailPreviewPropTypes> = ({
                 Manufacture Date
               </span>
               <span className="font-normal text-sm">
-                {currentDataPayload.Product_Details.manufacture_date
+                {currentDataPayload.Product_Details?.manufacture_date
                   ? currentDataPayload.Product_Details.manufacture_date
                   : "unavailable..."}
               </span>
@@ -170,7 +169,7 @@ const ProductDetailPreview: React.FC<productDetailPreviewPropTypes> = ({
             <h3>Ingredients Information</h3>
             <hr className="h-[1px] w-full bg-gray-500 border-none" />
           </div>
-          {currentDataPayload.Ingredients_Information.map(
+          {currentDataPayload.Ingredients_Information?.map(
             (ingredient: Ingredient, index: number) => (
               <div
                 className="flex flex-col gap-[4px] bg-orange-100 rounded-lg pt-[10px] pb-[10px] pl-[10px] pr-[10px]"

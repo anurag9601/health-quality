@@ -130,7 +130,7 @@ const UploadImageView: React.FC<PropsType> = ({
                   <span className="h-[13px] w-[100px] md:w-[150px] bg-orange-200 rounded loading-animation"></span>
                 </div>
               </div>
-              <div className="w-[200px] h-[200px] w-full h-full p-[10px] bg-orange-200 rounded-lg cursor-pointer loading-animation"></div>
+              <div className="max-w-[200px] min-h-[200px] w-full h-full p-[10px] bg-orange-200 rounded-lg cursor-pointer loading-animation"></div>
             </div>
             <div className="mt-[20px] mb-[80px] flex flex-col gap-[10px]">
               <div className="flex flex-col gap-[5px] items-center text-lg font-medium mb-[20px] pl-[5px] pr-[5px] font-head">
