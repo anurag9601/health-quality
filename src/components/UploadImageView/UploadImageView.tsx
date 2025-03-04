@@ -66,6 +66,13 @@ const UploadImageView: React.FC<PropsType> = ({
     if (response) {
       const realJson = await convertResponseDataToJSON(response.response);
 
+      if (realJson.error) {
+        setLoading(false);
+        setFile(null);
+        alert(realJson.error);
+        return;
+      }
+
       const payload = {
         userEmail: user?.email,
         productImgURL: imagePreview,
@@ -83,57 +90,129 @@ const UploadImageView: React.FC<PropsType> = ({
     }
   };
   return (
-    <div className="h-full w-full bg-neutral-600 bg-opacity-50 fixed flex items-center justify-center font-head">
-      {currentDataPayload === null ? (
-        <div className="h-[70%] w-[90%] sm:w-[80%] md:w-[60%] lg:w-[40%] bg-orange-50 rounded-lg flex flex-col items-center justify-between pt-[20px] pb-[20px] pl-[10px] pr-[10px]">
-          {!loading ? (
-            <Image
-              src={imagePreview}
-              alt=""
-              width={300}
-              height={300}
-              className="rounded-lg object-cover object-center overflow-hidden mb-[15px]"
-            />
-          ) : (
-            <div className="h-full w-full flex flex-col items-center justify-center">
-              <div className="border border-[8px] h-[80px] w-[80px] border-t-orange-500 border-t-[8px] rounded-full spin-animation"></div>
-              <h3 className="mt-[20px] text-xl font-bold text-orange-500 blink-animation">
-                Analyzing
-              </h3>
+    <>
+      {loading ? (
+        <div className="h-full w-full bg-orange-50 fixed rounded-lg">
+          <div className="w-full h-fit pt-[5px] pb-[5px] text-lg flex items-center justify-center pl-[5%] pr-[5%]">
+            <div className="w-[150px] md:w-[200px] h-[20px] bg-orange-200 rounded-md loading-animation mt-[4px] mb-[4px]"></div>
+          </div>
+          <hr className="h-[1px] w-full bg-gray-500 border-none" />
+          <div className="h-full w-full overflow-y-scroll p-[10px] scrollbar-thin scrollbar-thumb-orange-300 scrollbar-track-orange-100">
+            <div className="flex flex-col-reverse gap-[10px] items-center sm:flex-row sm:items-start">
+              <div className="w-full h-fit">
+                <div className="font-normal flex items-center gap-[10px] text-lg">
+                  <span className="font-head font-medium text-lg bg-orange-300 pt-[0px] pb-[0px] pl-[7px] pr-[7px] rounded-md">
+                    Healthy
+                  </span>
+                  <div className="h-[20px] w-[20px] rounded-full bg-orange-200 loading-animation"></div>
+                </div>
+                <div className="font-normal flex flex-col items-start gap-[0px] mt-[10px]">
+                  <span className="font-head font-medium text-lg bg-orange-300 pt-[0px] pb-[0px] pl-[7px] pr-[7px] rounded-md mb-[7px]">
+                    Overall Health Assessment
+                  </span>
+                  <div className="text-sm w-full h-fit flex flex-col gap-[5px]">
+                    <div className="h-[13px] w-full bg-orange-200 rounded loading-animation"></div>
+                    <div></div>
+                    <div className="h-[13px] w-full bg-orange-200 rounded loading-animation"></div>
+                    <div></div>
+                  </div>
+                </div>
+                <div className="mt-[10px] flex items-center gap-[10px]">
+                  <span className="font-head font-medium text-lg bg-orange-300 pt-[0px] pb-[0px] pl-[7px] pr-[7px] rounded-md">
+                    Expiry Date
+                  </span>
+                  <span className="h-[13px] w-[100px] md:w-[150px] bg-orange-200 rounded loading-animation"></span>
+                </div>
+                <div className="mt-[10px] flex items-center gap-[10px]">
+                  <span className="font-head font-medium text-lg bg-orange-300 pt-[0px] pb-[0px] pl-[7px] pr-[7px] rounded-md">
+                    Manufacture Date
+                  </span>
+                  <span className="h-[13px] w-[100px] md:w-[150px] bg-orange-200 rounded loading-animation"></span>
+                </div>
+              </div>
+              <div className="w-[200px] h-[200px] w-full h-full p-[10px] bg-orange-200 rounded-lg cursor-pointer loading-animation"></div>
             </div>
-          )}
-          <div className="w-full h-[35px] flex justify-end pr-[20px] gap-[20px]">
-            <button
-              className={`pl-[20px] pr-[20px] pt-[5px] pb-[5px] rounded-lg text-lg border-dotted border-[2px] border-orange-700 flex items-center justify-center ${
-                !loading && "hover:border-solid hover:border-orange-500"
-              } ${loading && "opacity-[.5]"}`}
-              onClick={() => setFile(null)}
-              disabled={loading}
-            >
-              Cancel
-            </button>
-            <button
-              className={`bg-gradient-to-r from-amber-400 to-orange-600 px-6 py-2 rounded-lg text-lg flex items-center justify-center 
-  bg-[length:200%_200%] bg-left transition-all duration-500 ease-in-out 
-  ${!loading && "hover:from-orange-600 hover:to-amber-400 hover:bg-right"} ${
-                loading && "opacity-[.5]"
-              }`}
-              onClick={handleUserUploadRequest}
-              disabled={loading}
-            >
-              Upload
-            </button>
+            <div className="mt-[20px] mb-[80px] flex flex-col gap-[10px]">
+              <div className="flex flex-col gap-[5px] items-center text-lg font-medium mb-[20px] pl-[5px] pr-[5px] font-head">
+                <hr className="h-[1px] w-full bg-gray-500 border-none" />
+                <h3>Ingredients Information</h3>
+                <hr className="h-[1px] w-full bg-gray-500 border-none" />
+              </div>
+              <div className="flex flex-col gap-[4px] bg-orange-100 rounded-lg pt-[10px] pb-[10px] pl-[10px] pr-[10px]">
+                <div className="font-normal flex items-center gap-[10px]">
+                  <span className="font-head font-medium text-lg bg-orange-300 pt-[0px] pb-[0px] pl-[7px] pr-[7px] rounded-md">
+                    Name
+                  </span>
+                  <span className="h-[13px] w-[100px] md:w-[150px] bg-orange-200 rounded loading-animation"></span>
+                </div>
+                <div className="font-normal flex items-center gap-[10px]">
+                  <span className="font-head font-medium text-lg bg-orange-300 pt-[0px] pb-[0px] pl-[7px] pr-[7px] rounded-md">
+                    Is Healthy
+                  </span>
+                  <span className="h-[13px] w-[100px] md:w-[150px] bg-orange-200 rounded loading-animation"></span>
+                </div>
+                <div className="font-normal flex flex-col sm:flex-row items-start gap-[3px] sm:gap-[10px] mb-[5px] sm:mb-[0px] mt-[5px] sm:mt-[0px]">
+                  <span className="font-head font-medium text-lg bg-orange-300 pt-[0px] pb-[0px] pl-[7px] pr-[7px] rounded-md">
+                    Description
+                  </span>
+                  <div className="h-[13px] w-full bg-orange-200 rounded loading-animation"></div>
+                  <div></div>
+                </div>
+                <div className="font-normal flex flex-col sm:flex-row items-start gap-[3px] sm:gap-[10px] mb-[5px] sm:mb-[0px] mt-[0px] sm:mt-[0px]">
+                  <span className="font-head font-medium text-lg bg-orange-300 pt-[0px] pb-[0px] pl-[7px] pr-[7px] rounded-md max-w-fit w-full">
+                    Not Good For
+                  </span>
+                  <span className="h-[13px] w-full bg-orange-200 rounded loading-animation"></span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       ) : (
-        <ProductDetailPreview
-          file={file}
-          setFile={setFile}
-          currentDataPayload={currentDataPayload}
-          setCurrentDataPayload={setCurrentDataPayload}
-        />
+        <div className="h-full w-full bg-neutral-600 bg-opacity-50 fixed flex items-center justify-center font-head">
+          {currentDataPayload === null ? (
+            <div className="h-[70%] w-[90%] sm:w-[80%] md:w-[60%] lg:w-[40%] bg-orange-50 rounded-lg flex flex-col items-center justify-between pt-[20px] pb-[20px] pl-[10px] pr-[10px]">
+              <Image
+                src={imagePreview}
+                alt=""
+                width={300}
+                height={300}
+                className="rounded-lg object-cover object-center overflow-hidden mb-[15px]"
+              />
+              <div className="w-full h-[35px] flex justify-end pr-[20px] gap-[20px]">
+                <button
+                  className={`pl-[20px] pr-[20px] pt-[5px] pb-[5px] rounded-lg text-lg border-dotted border-[2px] border-orange-700 flex items-center justify-center ${
+                    !loading && "hover:border-solid hover:border-orange-500"
+                  } ${loading && "opacity-[.5]"}`}
+                  onClick={() => setFile(null)}
+                  disabled={loading}
+                >
+                  Cancel
+                </button>
+                <button
+                  className={`bg-gradient-to-r from-amber-400 to-orange-600 px-6 py-2 rounded-lg text-lg flex items-center justify-center 
+bg-[length:200%_200%] bg-left transition-all duration-500 ease-in-out 
+${!loading && "hover:from-orange-600 hover:to-amber-400 hover:bg-right"} ${
+                    loading && "opacity-[.5]"
+                  }`}
+                  onClick={handleUserUploadRequest}
+                  disabled={loading}
+                >
+                  Upload
+                </button>
+              </div>
+            </div>
+          ) : (
+            <ProductDetailPreview
+              file={file}
+              setFile={setFile}
+              currentDataPayload={currentDataPayload}
+              setCurrentDataPayload={setCurrentDataPayload}
+            />
+          )}
+        </div>
       )}
-    </div>
+    </>
   );
 };
 

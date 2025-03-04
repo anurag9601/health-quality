@@ -37,6 +37,8 @@ export async function getImageURLAndGiveResponse(imageBuffer: Buffer<ArrayBuffer
 
     overall_health_assessment: A summary of the product’s healthiness based on its ingredients.
     healthy: A single boolean value (true or false) indicating whether the product is healthy overall. If it contains more unhealthy ingredients than healthy ones, set this to false; otherwise, set it to true.
+
+    and if given image is not of any product or not clear simple return one json response like { error: "error as per you notice what is problem" }
     `
 
         const IMAGE_PART = await fileToGeneratePart(imageBuffer, mimeType);

@@ -63,8 +63,35 @@ const RecentProducts: React.FC<RecentProductsPropsType> = ({
       </div>
       <hr className="h-[1px] w-full bg-gray-500 border-none mt-[10px]" />
       {productLoading === true ? (
-        <div className="flex items-center justify-center">
-          <div className="border border-[4px] h-[50px] w-[50px] border-t-orange-500 border-t-[4px] rounded-full spin-animation mt-[30px] mb-[30px]"></div>
+        <div className="flex flex-col w-full h-fit">
+          <div className="h-[45px] w-full bg-orange-100 flex items-center justify-between pl-[3%] pr-[3%]">
+            <div className="flex flex-1 items-center justify-start gap-[10px] md:gap-[20px]">
+              <div className="h-[20px] w-[20px] rounded-full bg-orange-200"></div>
+              <div className="h-[20px] w-[60%] md:w-[30%] bg-orange-200 rounded loading-animation"></div>
+            </div>
+            <Image
+              src={"/delete.png"}
+              alt=""
+              height={30}
+              width={30}
+              className="cursor-pointer h-[25px] w-[25px] grayscale"
+            />
+          </div>
+          <hr className="h-[1px] w-full bg-gray-500 border-none" />
+          <div className="h-[45px] w-full bg-orange-100 flex items-center justify-between pl-[3%] pr-[3%]">
+            <div className="flex flex-1 items-center justify-start gap-[10px] md:gap-[20px]">
+              <div className="h-[20px] w-[20px] rounded-full bg-orange-200"></div>
+              <div className="h-[20px] w-[60%] md:w-[30%] bg-orange-200 rounded loading-animation"></div>
+            </div>
+            <Image
+              src={"/delete.png"}
+              alt=""
+              height={30}
+              width={30}
+              className="cursor-pointer h-[25px] w-[25px] grayscale"
+            />
+          </div>
+          <hr className="h-[1px] w-full bg-gray-500 border-none" />
         </div>
       ) : (
         <>

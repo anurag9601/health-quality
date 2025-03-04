@@ -53,3 +53,13 @@
 .blink-animation{
     animation: blink 1s ease-in-out infinite;
 }
+
+@keyframes loading{
+    50%{
+        opacity: .3;
+    }
+}
+
+.loading-animation{
+    animation : loading 1s linear infinite
+}

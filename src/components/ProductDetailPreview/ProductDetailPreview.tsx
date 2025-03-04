@@ -165,7 +165,7 @@ const ProductDetailPreview: React.FC<productDetailPreviewPropTypes> = ({
           </div>
         </div>
         <div className="mt-[20px] mb-[80px] flex flex-col gap-[10px]">
-          <div className="flex flex-col gap-[5px] items-center text-lg font-medium mb-[20px] pl-[5px] pr-[5px]">
+          <div className="flex flex-col gap-[5px] items-center text-lg font-medium mb-[20px] pl-[5px] pr-[5px] font-head">
             <hr className="h-[1px] w-full bg-gray-500 border-none" />
             <h3>Ingredients Information</h3>
             <hr className="h-[1px] w-full bg-gray-500 border-none" />
