@@ -1,5 +1,6 @@
 "use client";
 import HomeNav from "@/components/HomeNav/HomeNav";
+import Notifications from "@/components/Notifications/Notifications";
 import RecentProducts from "@/components/RecentProducts/RecentProducts";
 import UploadImageView from "@/components/UploadImageView/UploadImageView";
 import { UserContext } from "@/context/userContext";
@@ -9,7 +10,8 @@ import { redirect } from "next/navigation";
 import React, { ChangeEvent, useContext, useEffect } from "react";
 
 const Home = () => {
-  const { user, setUser, setUserAllProduct } = useContext(UserContext);
+  const { user, setUser, setUserAllProduct, notificationWindowOpen } =
+    useContext(UserContext);
 
   const [file, setFile] = React.useState<File | null>(null);
 
@@ -97,6 +99,7 @@ const Home = () => {
 
   return (
     <div className="min-h-dvh w-full bg-orange-50 overflow-x-hidden">
+      {notificationWindowOpen && <Notifications />}
       {file && imagePreview && (
         <UploadImageView
           file={file}

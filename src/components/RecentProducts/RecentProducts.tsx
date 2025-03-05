@@ -74,7 +74,7 @@ const RecentProducts: React.FC<RecentProductsPropsType> = ({
               alt=""
               height={30}
               width={30}
-              className="cursor-pointer h-[25px] w-[25px] grayscale"
+              className="h-[25px] w-[25px] grayscale"
             />
           </div>
           <hr className="h-[1px] w-full bg-gray-500 border-none" />

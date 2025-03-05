@@ -92,7 +92,7 @@ const UploadImageView: React.FC<PropsType> = ({
   return (
     <>
       {loading ? (
-        <div className="h-full w-full bg-orange-50 fixed rounded-lg">
+        <div className="h-full w-full bg-orange-50 fixed rounded-lg z-[1]">
           <div className="w-full h-fit pt-[5px] pb-[5px] text-lg flex items-center justify-center pl-[5%] pr-[5%]">
             <div className="w-[150px] md:w-[200px] h-[20px] bg-orange-200 rounded-md loading-animation mt-[4px] mb-[4px]"></div>
           </div>
@@ -169,7 +169,7 @@ const UploadImageView: React.FC<PropsType> = ({
           </div>
         </div>
       ) : (
-        <div className="h-full w-full bg-neutral-600 bg-opacity-50 fixed flex items-center justify-center font-head">
+        <div className="h-full w-full bg-neutral-600 bg-opacity-50 fixed flex items-center justify-center font-head z-[1]">
           {currentDataPayload === null ? (
             <div className="h-[70%] w-[90%] sm:w-[80%] md:w-[60%] lg:w-[40%] bg-orange-50 rounded-lg flex flex-col items-center justify-between pt-[20px] pb-[20px] pl-[10px] pr-[10px]">
               <Image

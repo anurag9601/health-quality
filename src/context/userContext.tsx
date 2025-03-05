@@ -40,6 +40,8 @@ interface userContextDataType {
   setUserAllProduct: Dispatch<SetStateAction<UserProduct[]>>;
   currentOpenProduct: UserProduct | null;
   setCurrentOpenProduct: Dispatch<SetStateAction<UserProduct | null>>;
+  notificationWindowOpen: boolean;
+  setNotificationWindowOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 export const UserContext = React.createContext<userContextDataType>({
@@ -49,6 +51,8 @@ export const UserContext = React.createContext<userContextDataType>({
   setUserAllProduct: () => {},
   currentOpenProduct: null,
   setCurrentOpenProduct: () => {},
+  notificationWindowOpen: false,
+  setNotificationWindowOpen: () => {},
 });
 
 const UserProvider = ({ children }: { children: ReactNode }) => {
@@ -61,6 +65,8 @@ const UserProvider = ({ children }: { children: ReactNode }) => {
   const [currentOpenProduct, setCurrentOpenProduct] =
     React.useState<UserProduct | null>(null);
 
+  const [notificationWindowOpen, setNotificationWindowOpen] =
+    React.useState<boolean>(false);
 
   const values = {
     user,
@@ -69,6 +75,8 @@ const UserProvider = ({ children }: { children: ReactNode }) => {
     setUserAllProduct,
     currentOpenProduct,
     setCurrentOpenProduct,
+    notificationWindowOpen,
+    setNotificationWindowOpen
   };
   return <UserContext.Provider value={values}>{children}</UserContext.Provider>;
 };
