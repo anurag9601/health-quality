@@ -171,13 +171,13 @@ const UploadImageView: React.FC<PropsType> = ({
       ) : (
         <div className="h-full w-full bg-neutral-600 bg-opacity-50 fixed flex items-center justify-center font-head z-[1]">
           {currentDataPayload === null ? (
-            <div className="h-[70%] w-[90%] sm:w-[80%] md:w-[60%] lg:w-[40%] bg-orange-50 rounded-lg flex flex-col items-center justify-between pt-[20px] pb-[20px] pl-[10px] pr-[10px]">
+            <div className="h-[70%] w-[90%] sm:w-[80%] md:w-[60%] lg:w-[40%] bg-orange-50 rounded-lg flex flex-col items-center justify-center pt-[20px] pb-[20px] pl-[10px] pr-[10px]">
               <Image
                 src={imagePreview}
                 alt=""
                 width={300}
                 height={300}
-                className="rounded-lg object-cover object-center overflow-hidden mb-[15px]"
+                className="rounded-lg object-cover object-center overflow-hidden mb-[15px] flex-1"
               />
               <div className="w-full h-[35px] flex justify-end pr-[20px] gap-[20px]">
                 <button

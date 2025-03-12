@@ -1,10 +1,15 @@
 "use client";
 import AddExpireDetails from "@/components/AddExpireDetails/AddExpireDetails";
 import ExpiryNav from "@/components/ExpiredNav/ExpiryNav";
+import ExpiryRecentProducts from "@/components/ExpiryRecentProducts/ExpiryRecentProducts";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React from "react";
+import { FaLongArrowAltLeft } from "react-icons/fa";
 
 const ExpiryHome = () => {
+  const router = useRouter();
+
   const [addManuallyBoxOpen, setAddManuallyBoxOpen] = React.useState(false);
 
   return (
@@ -13,6 +18,14 @@ const ExpiryHome = () => {
         <AddExpireDetails setAddManuallyBoxOpen={setAddManuallyBoxOpen} />
       )}
       <ExpiryNav />
+      <div className="w-full h-[20px] pl-[10px] pt-[10px] mb-[10px]">
+        <span
+          className="font-head text-[15px] text-sky-50 bg-indigo-400 pl-[10px] pr-[5px] rounded-sm font-semibold flex items-center gap-[10px] w-fit h-[20px] cursor-pointer transition-all duration-[300] ease-in-out hover:pl-[5px] hover:border-[1px] hover:border-black"
+          onClick={() => router.push("/")}
+        >
+          <FaLongArrowAltLeft /> Back to homepage
+        </span>
+      </div>
       <div className="flex flex-col sm:flex-row align-start justify-center gap-[10px] pl-[20%] pr-[20%] mt-[20px]">
         <label className="cursor-pointer">
           <Image
@@ -42,6 +55,7 @@ const ExpiryHome = () => {
           </button>
         </div>
       </div>
+      {/* <ExpiryRecentProducts /> */}
     </div>
   );
 };

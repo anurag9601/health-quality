@@ -9,18 +9,24 @@ export async function POST(req: NextRequest) {
 
         const passwordResetId = uuidv4();
 
-        let user = await prismaClient.user.update({
+        let user = await prismaClient.user.findUnique({
+            where: {
+                email: userEmail,
+            },
+        });
+
+        if (!user) {
+            return NextResponse.json({ success: false, error: "User email is not registered" }, { status: 400 });
+        }
+
+        user = await prismaClient.user.update({
             where: {
                 email: userEmail,
             },
             data: {
-                passwordResetId,
+                passwordResetId: passwordResetId,
             }
         });
-
-        if (!user) {
-            return NextResponse.json({ success: false, error: "User not found" }, { status: 400 });
-        }
 
         const transporter = nodemailer.createTransport({
             service: "gmail",

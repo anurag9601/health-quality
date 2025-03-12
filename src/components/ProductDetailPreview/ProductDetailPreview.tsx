@@ -83,8 +83,8 @@ const ProductDetailPreview: React.FC<productDetailPreviewPropTypes> = ({
     <div className="h-full w-full bg-orange-50 rounded-lg">
       {imgPreviewWindowOpen && (
         <div className="fixed h-full w-full bg-neutral-600 bg-opacity-50 flex items-center justify-center">
-          <div className="h-[70%] w-[90%] sm:w-[80%] md:w-[60%] lg:w-[40%] bg-orange-50 rounded-lg flex flex-col items-center justify-between pt-[5px] pb-[5px] pl-[5px] pr-[5px]">
-            <div className="h-[20px] w-full mb-[3px] flex items-center justify-end">
+          <div className="h-[70%] w-[90%] sm:w-[80%] md:w-[60%] lg:w-[40%] bg-orange-50 rounded-lg flex flex-col items-center justify-center pt-[20px] pb-[5px] pl-[5px] pr-[5px] relative">
+            <div className="h-[20px] w-full mb-[3px] flex items-center justify-end absolute inset-y-[10px] inset-x-[-3%]">
               <AiOutlineFullscreenExit
                 className="text-xl cursor-pointer text-orange-500 hover:text-orange-800"
                 onClick={() => setImgPreviewWindowOpen(false)}
@@ -125,7 +125,8 @@ const ProductDetailPreview: React.FC<productDetailPreviewPropTypes> = ({
               </span>
               <span className="text-sm">
                 {
-                  currentDataPayload.Overall_Health_Assessment?.overall_health_assessment
+                  currentDataPayload.Overall_Health_Assessment
+                    ?.overall_health_assessment
                 }
               </span>
             </div>
