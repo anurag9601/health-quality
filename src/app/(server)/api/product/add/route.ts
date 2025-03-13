@@ -1,4 +1,5 @@
 import dbConnect from "@/mongodb/connectDB";
+import notificationModel from "@/mongodb/notification.model";
 import userProduct from "@/mongodb/product.model";
 import userAllProducts from "@/mongodb/userAllProducts.model";
 import { NextRequest, NextResponse } from "next/server";
@@ -25,9 +26,16 @@ export async function POST(req: NextRequest) {
             Ingredients_Information,
             Overall_Health_Assessment,
             Product_Details
+        });
+
+        const newNotification = await notificationModel.create({
+            notificationType: "analysis",
+            notificationMessage: `New addition! ${Product_Details.product_name} is now part of your catalog.`,
         })
 
         await user.products.push(newProduct._id);
+
+        await user.notifications.push(newNotification._id);
 
         await user.save();
 

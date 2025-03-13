@@ -16,6 +16,7 @@ interface PropsType {
 }
 
 export interface CurrentDataPayload {
+  userEmail: string;
   Product_Details: ProductDetails;
   Overall_Health_Assessment: HealthAssessment;
   Ingredients_Information: Ingredient[];
@@ -73,15 +74,17 @@ const UploadImageView: React.FC<PropsType> = ({
         return;
       }
 
-      const payload = {
-        userEmail: user?.email,
-        productImgURL: imagePreview,
-        Ingredients_Information: realJson["Ingredients Information"],
-        Overall_Health_Assessment: realJson["Overall Health Assessment"],
-        Product_Details: realJson["Product Details"],
-      };
+      if (user) {
+        const payload = {
+          userEmail: user.email,
+          productImgURL: imagePreview,
+          Ingredients_Information: realJson["Ingredients Information"],
+          Overall_Health_Assessment: realJson["Overall Health Assessment"],
+          Product_Details: realJson["Product Details"],
+        };
 
-      setCurrentDataPayload(payload);
+        setCurrentDataPayload(payload);
+      }
 
       setLoading(false);
     } else {

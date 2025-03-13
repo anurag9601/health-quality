@@ -48,7 +48,7 @@ const userAddProductSchema = new mongoose.Schema({
             type: String
         }
     }
-});
+}, { timestamps: true });
 
 const userProduct = mongoose.models.userProduct || mongoose.model("userProduct", userAddProductSchema);
 

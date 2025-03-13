@@ -68,6 +68,8 @@ const UserProvider = ({ children }: { children: ReactNode }) => {
   const [notificationWindowOpen, setNotificationWindowOpen] =
     React.useState<boolean>(false);
 
+  // const [notifications, setNotifications] = React.useState()
+
   const values = {
     user,
     setUser,

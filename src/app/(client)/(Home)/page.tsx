@@ -10,8 +10,13 @@ import { redirect } from "next/navigation";
 import React, { ChangeEvent, useContext, useEffect } from "react";
 
 const Home = () => {
-  const { user, setUser, setUserAllProduct, notificationWindowOpen } =
-    useContext(UserContext);
+  const {
+    user,
+    setUser,
+    userAllProduct,
+    setUserAllProduct,
+    notificationWindowOpen,
+  } = useContext(UserContext);
 
   const [file, setFile] = React.useState<File | null>(null);
 
@@ -77,6 +82,8 @@ const Home = () => {
     });
 
     const response = await request.json();
+
+    console.log(response);
 
     if (response && response.allProductsData) {
       setUserAllProduct(response.allProductsData.products);

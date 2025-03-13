@@ -1,33 +1,38 @@
 "use client";
 import AddExpireDetails from "@/components/AddExpireDetails/AddExpireDetails";
 import ExpiryNav from "@/components/ExpiredNav/ExpiryNav";
+import ExpiryNotification from "@/components/ExpiryNotifications/ExpiryNotification";
 import ExpiryRecentProducts from "@/components/ExpiryRecentProducts/ExpiryRecentProducts";
+import { UserContext } from "@/context/userContext";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useContext } from "react";
 import { FaLongArrowAltLeft } from "react-icons/fa";
 
 const ExpiryHome = () => {
   const router = useRouter();
 
+  const { notificationWindowOpen } = useContext(UserContext);
+
   const [addManuallyBoxOpen, setAddManuallyBoxOpen] = React.useState(false);
 
   return (
-    <div className="h-full w-full bg-sky-100">
+    <div className="min-h-dvh w-full bg-sky-100">
+      {notificationWindowOpen && <ExpiryNotification />}
       {addManuallyBoxOpen && (
         <AddExpireDetails setAddManuallyBoxOpen={setAddManuallyBoxOpen} />
       )}
       <ExpiryNav />
-      <div className="w-full h-[20px] pl-[10px] pt-[10px] mb-[10px]">
+      <div className="w-full h-[20px] pl-[10%] pt-[10px] mb-[10px]">
         <span
-          className="font-head text-[15px] text-sky-50 bg-indigo-400 pl-[10px] pr-[5px] rounded-sm font-semibold flex items-center gap-[10px] w-fit h-[20px] cursor-pointer transition-all duration-[300] ease-in-out hover:pl-[5px] hover:border-[1px] hover:border-black"
+          className="font-head text-[15px] text-sky-50 bg-indigo-400 pl-[10px] pr-[5px] rounded-sm font-semibold flex items-center gap-[10px] w-fit h-[20px] cursor-pointer transition-all duration-[300] ease-in-out hover:pl-[5px] hover:border-black"
           onClick={() => router.push("/")}
         >
           <FaLongArrowAltLeft /> Back to homepage
         </span>
       </div>
-      <div className="flex flex-col sm:flex-row align-start justify-center gap-[10px] pl-[20%] pr-[20%] mt-[20px]">
-        <label className="cursor-pointer">
+      <div className="flex flex-col sm:flex-row align-start justify-center gap-[10px] pl-[10%] sm:pl-[20%] pr-[10%] sm:pr-[20%] mt-[20px]">
+        <label className="cursor-pointer flex flex-col items-center">
           <Image
             src={"/expiry-camera.png"}
             alt=""
@@ -55,7 +60,7 @@ const ExpiryHome = () => {
           </button>
         </div>
       </div>
-      {/* <ExpiryRecentProducts /> */}
+      <ExpiryRecentProducts />
     </div>
   );
 };

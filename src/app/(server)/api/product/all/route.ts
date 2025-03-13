@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
             throw new Error("Models are not loaded correctly.");
         }
 
-        const allProductsData = await userAllProducts.findOne({ userEmail }).populate("products");
+        const allProductsData = await userAllProducts.findOne({ userEmail }).populate("products").populate("notifications");
 
         return NextResponse.json({ allProductsData }, { status: 200 })
     } catch (err) {

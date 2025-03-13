@@ -8,8 +8,6 @@ import React, { useContext } from "react";
 const ExpiryNav = () => {
   const { user, setUser, setNotificationWindowOpen } = useContext(UserContext);
 
-  // const router = useRouter();
-
   const handleUserSignOut = async () => {
     const request = await fetch("/api/signout");
 
