@@ -9,12 +9,10 @@ const userAllProductsSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "userProduct"
     }],
-    notifications: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "notifications"
-        }
-    ]
+    appNotifications: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "allNotifications"
+    }]
 });
 
 const userAllProducts = mongoose.models.userAllProducts || mongoose.model("userAllProducts", userAllProductsSchema);

@@ -2,17 +2,29 @@ import dbConnect from "@/mongodb/connectDB";
 import userAllProducts from "@/mongodb/userAllProducts.model";
 import userProduct from "@/mongodb/product.model";
 import { NextRequest, NextResponse } from "next/server";
+import notificationModel from "@/mongodb/notifications.model";
 
 export async function POST(req: NextRequest) {
     try {
         await dbConnect();
+
         const { userEmail } = await req.json();
 
         if (!userAllProducts || !userProduct) {
             throw new Error("Models are not loaded correctly.");
         }
 
-        const allProductsData = await userAllProducts.findOne({ userEmail }).populate("products").populate("notifications");
+        const allProductsData = await userAllProducts.findOne({ userEmail }).populate({
+            path: "products",
+            options: {
+                sort: { createdAt: -1 }
+            }
+        }).populate({
+            path: "appNotifications",
+            options: {
+                sort: { createdAt: -1 }
+            }
+        });
 
         return NextResponse.json({ allProductsData }, { status: 200 })
     } catch (err) {

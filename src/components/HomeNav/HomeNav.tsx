@@ -6,7 +6,8 @@ import { UserContext } from "@/context/userContext";
 import { handleUserGoogleSignOut } from "@/services/authProvider";
 
 const HomeNav = () => {
-  const { user, setUser, setNotificationWindowOpen } = useContext(UserContext);
+  const { user, setUser, setNotificationWindowOpen, notifications } =
+    useContext(UserContext);
 
   const router = useRouter();
 
@@ -61,7 +62,7 @@ const HomeNav = () => {
               className="sm:h-[25px] sm:w-[25px]"
             />
             <div className="absolute h-[14px] w-[14px] sm:h-[17px] sm:w-[17px] bg-red-500 rounded-full inset-y-[-6px] inset-x-[14px] flex items-center justify-center text-[10px] sm:text-[12px] text-orange-50 font-bold">
-              99+
+              {notifications.length < 99 ? notifications.length : "99+"}
             </div>
           </div>
         </div>

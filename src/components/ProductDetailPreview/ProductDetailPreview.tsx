@@ -20,7 +20,8 @@ const ProductDetailPreview: React.FC<productDetailPreviewPropTypes> = ({
   currentDataPayload,
   setCurrentDataPayload,
 }) => {
-  const { setUserAllProduct } = useContext(UserContext);
+  const { setUserAllProduct, notifications, setNotifications } =
+    useContext(UserContext);
 
   const [loading, setLoading] = React.useState(false);
 
@@ -73,7 +74,12 @@ const ProductDetailPreview: React.FC<productDetailPreviewPropTypes> = ({
     const dataBaseResponse = await dataBaseRequest.json();
 
     if (dataBaseResponse.addProduct) {
-      setUserAllProduct((prev) => [...prev, dataBaseResponse.addProduct]);
+      setUserAllProduct((prev) => [dataBaseResponse.addProduct, ...prev]);
+      const newNotificationsList = [
+        dataBaseResponse.addNotification,
+        ...notifications,
+      ];
+      setNotifications(newNotificationsList);
       handleUserHomePageRedirect();
     }
 

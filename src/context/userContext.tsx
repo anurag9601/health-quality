@@ -33,6 +33,14 @@ export interface UserProduct {
   productImgURL: string;
 }
 
+export interface notificationsDataType {
+  createdAt: string;
+  notificationMessage: string;
+  notificationType: string;
+  updatedAt: string;
+  _id: string;
+}
+
 interface userContextDataType {
   user: userDataType | null;
   setUser: Dispatch<SetStateAction<userDataType | null>>;
@@ -42,6 +50,8 @@ interface userContextDataType {
   setCurrentOpenProduct: Dispatch<SetStateAction<UserProduct | null>>;
   notificationWindowOpen: boolean;
   setNotificationWindowOpen: Dispatch<SetStateAction<boolean>>;
+  notifications: notificationsDataType[] | [];
+  setNotifications: Dispatch<SetStateAction<[] | notificationsDataType[]>>;
 }
 
 export const UserContext = React.createContext<userContextDataType>({
@@ -53,6 +63,8 @@ export const UserContext = React.createContext<userContextDataType>({
   setCurrentOpenProduct: () => {},
   notificationWindowOpen: false,
   setNotificationWindowOpen: () => {},
+  notifications: [],
+  setNotifications: () => {},
 });
 
 const UserProvider = ({ children }: { children: ReactNode }) => {
@@ -68,7 +80,9 @@ const UserProvider = ({ children }: { children: ReactNode }) => {
   const [notificationWindowOpen, setNotificationWindowOpen] =
     React.useState<boolean>(false);
 
-  // const [notifications, setNotifications] = React.useState()
+  const [notifications, setNotifications] = React.useState<
+    notificationsDataType[] | []
+  >([]);
 
   const values = {
     user,
@@ -78,7 +92,9 @@ const UserProvider = ({ children }: { children: ReactNode }) => {
     currentOpenProduct,
     setCurrentOpenProduct,
     notificationWindowOpen,
-    setNotificationWindowOpen
+    setNotificationWindowOpen,
+    notifications,
+    setNotifications,
   };
   return <UserContext.Provider value={values}>{children}</UserContext.Provider>;
 };

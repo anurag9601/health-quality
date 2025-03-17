@@ -13,7 +13,7 @@ const Home = () => {
   const {
     user,
     setUser,
-    userAllProduct,
+    setNotifications,
     setUserAllProduct,
     notificationWindowOpen,
   } = useContext(UserContext);
@@ -83,10 +83,9 @@ const Home = () => {
 
     const response = await request.json();
 
-    console.log(response);
-
     if (response && response.allProductsData) {
       setUserAllProduct(response.allProductsData.products);
+      setNotifications(response.allProductsData.appNotifications);
     }
 
     setProductLoading(false);
