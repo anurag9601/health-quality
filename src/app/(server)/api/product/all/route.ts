@@ -1,7 +1,7 @@
-import dbConnect from "@/mongodb/connectDB";
 import userAllProducts from "@/mongodb/userAllProducts.model";
 import userProduct from "@/mongodb/product.model";
 import { NextRequest, NextResponse } from "next/server";
+import dbConnect from "@/mongodb/connectDB";
 import notificationModel from "@/mongodb/notifications.model";
 
 export async function POST(req: NextRequest) {
@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
 
         const { userEmail } = await req.json();
 
-        if (!userAllProducts || !userProduct) {
+        if (!userAllProducts || !userProduct || !notificationModel) {
             throw new Error("Models are not loaded correctly.");
         }
 

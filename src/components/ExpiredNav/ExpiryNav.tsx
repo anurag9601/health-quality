@@ -6,7 +6,8 @@ import { redirect, useRouter } from "next/navigation";
 import React, { useContext } from "react";
 
 const ExpiryNav = () => {
-  const { user, setUser, setNotificationWindowOpen } = useContext(UserContext);
+  const { user, setUser, setNotificationWindowOpen, notifications } =
+    useContext(UserContext);
 
   const handleUserSignOut = async () => {
     const request = await fetch("/api/signout");
@@ -54,9 +55,11 @@ const ExpiryNav = () => {
               width={20}
               className="sm:h-[25px] sm:w-[25px]"
             />
-            <div className="absolute h-[14px] w-[14px] sm:h-[17px] sm:w-[17px] bg-indigo-500 rounded-full inset-y-[-6px] inset-x-[14px] flex items-center justify-center text-[10px] sm:text-[12px] text-blue-50 font-bold">
-              99+
-            </div>
+            {notifications.length > 0 && (
+              <div className="absolute h-[14px] w-[14px] sm:h-[17px] sm:w-[17px] bg-indigo-500 rounded-full inset-y-[-6px] inset-x-[14px] flex items-center justify-center text-[10px] sm:text-[12px] text-blue-50 font-bold">
+                {notifications.length < 99 ? notifications.length : "99+"}
+              </div>
+            )}
           </div>
         </div>
       </div>

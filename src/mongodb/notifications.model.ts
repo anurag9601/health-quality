@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const notificationSchema = new mongoose.Schema({
+const NotificationSchema = new mongoose.Schema({
     notificationType: {
         type: String,
         enum: ["analysis", "expiry"],
@@ -12,6 +12,6 @@ const notificationSchema = new mongoose.Schema({
     }
 }, { timestamps: true });
 
-const notificationModel = mongoose.models.allNotifications || mongoose.model("allNotifications", notificationSchema);
+const notificationModel = mongoose.models.Notifications || mongoose.model("Notifications", NotificationSchema);
 
 export default notificationModel;

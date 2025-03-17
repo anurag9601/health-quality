@@ -1,20 +1,20 @@
 import mongoose from "mongoose";
 
-const userAllProductsSchema = new mongoose.Schema({
+const UserAllOperationsSchema = new mongoose.Schema({
     userEmail: {
         type: String,
         required: true,
     },
     products: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: "userProduct"
+        ref: "Products"
     }],
     appNotifications: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: "allNotifications"
+        ref: "Notifications"
     }]
 });
 
-const userAllProducts = mongoose.models.userAllProducts || mongoose.model("userAllProducts", userAllProductsSchema);
+const userAllProducts = mongoose.models.UserAllOperations || mongoose.model("UserAllOperations", UserAllOperationsSchema);
 
 export default userAllProducts;

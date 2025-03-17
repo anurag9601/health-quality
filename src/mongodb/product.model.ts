@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const ingredientsInfoSchema = new mongoose.Schema({
+const IngredientsInfoSchema = new mongoose.Schema({
     description: {
         type: String,
     },
@@ -15,7 +15,7 @@ const ingredientsInfoSchema = new mongoose.Schema({
     }
 }, { _id: false });
 
-const userAddProductSchema = new mongoose.Schema({
+const UserAddProductSchema = new mongoose.Schema({
     userEmail: {
         type: String,
         required: true
@@ -26,7 +26,7 @@ const userAddProductSchema = new mongoose.Schema({
         default: ""
     },
     Ingredients_Information: {
-        type: [ingredientsInfoSchema],
+        type: [IngredientsInfoSchema],
         required: true,
     },
     Overall_Health_Assessment: {
@@ -50,6 +50,6 @@ const userAddProductSchema = new mongoose.Schema({
     }
 }, { timestamps: true });
 
-const userProduct = mongoose.models.userProduct || mongoose.model("userProduct", userAddProductSchema);
+const userProduct = mongoose.models.Products || mongoose.model("Products", UserAddProductSchema);
 
 export default userProduct;

@@ -83,6 +83,8 @@ const Home = () => {
 
     const response = await request.json();
 
+    console.log(response)
+
     if (response && response.allProductsData) {
       setUserAllProduct(response.allProductsData.products);
       setNotifications(response.allProductsData.appNotifications);
@@ -113,11 +115,12 @@ const Home = () => {
           imagePreview={imagePreview}
         />
       )}
-      <HomeNav />
+      <HomeNav productLoading={productLoading} />
       <div className="flex flex-col sm:flex-row align-start justify-center gap-[10px] pl-[20%] pr-[20%] mt-[20px]">
         <label className="cursor-pointer">
           <Image
             src={"/camera.png"}
+            priority
             alt=""
             width={250}
             height={250}

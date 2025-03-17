@@ -73,15 +73,15 @@ const Notifications = () => {
         </div>
         {noNotifications ? (
           <div className="flex-1 flex flex-col items-center justify-center gap-[20px] pl-[10%] pr-[10%] text-center text-lg">
-            You&apos;re all set! Notifications will appear when you analyze or set
-            expiry
+            You&apos;re all set! Notifications will appear when you analyze or
+            set expiry
             <BiSolidNotification className="text-[30px] text-orange-500" />
           </div>
         ) : (
           <div className="flex flex-col w-full h-full gap-[5px] mt-[10px] mb-[10px]">
             {notifications.map((notification, index) => (
               <div
-                className="h-[45px] w-full bg-orange-200 rounded-md flex items-center gap-[8px] relative"
+                className="h-fit w-full bg-orange-200 rounded-md flex items-center relative"
                 key={index}
               >
                 {notification.notificationType === "analysis" && (
@@ -93,36 +93,35 @@ const Notifications = () => {
                     className="absolute inset-y-[-3px] inset-x-[-1px]"
                   />
                 )}
-                <div className="flex-1">
-                  <p className="text-[13px] sm:text-[15px] mt-[10px] pl-[10px]">
-                    {notification.notificationMessage.slice(0, 45)}
-                    {notification.notificationMessage.length > 45 && "..."}
+                <div className="flex-1 h-fit">
+                  <p className="text-[14px] sm:text-[15px] mt-[10px] pl-[10px] pr-[10px] h-fit mb-[5px]">
+                    {notification.notificationMessage}
                   </p>
-                  <div className="w-full">
-                    <span className="text-[12px] sm:text-[13px] float-right font-head font-thin mb-[5px]">
+                  <div className="w-full flex items-end justify-between">
+                    <span className="text-[12px] sm:text-[13px] float-right font-head font-semibold pb-[5px] pl-[10px] text-orange-700">
                       {moment(notification.createdAt).format("h:mm A")}
                     </span>
+                    {deleteNotificationId === notification._id ? (
+                      <div className="pl-[5px] pr-[5px] pt-[5px] pb-[5px]">
+                        <div className="h-[20px] w-[20px] rounded-full border border-[3px] border-t-orange-500 border-t-[3px] spin-animation"></div>
+                      </div>
+                    ) : (
+                      <MdDelete
+                        className={`flex-1 h-full max-w-fit pl-[5px] pr-[5px] pt-[5px] pb-[5px] text-red-500 text-[20px] ${
+                          !deleteNotificationId &&
+                          "hover:bg-red-500 hover:text-orange-50 cursor-pointer"
+                        } rounded-md transition-all delay-[300] ease-in-out ${
+                          deleteNotificationId && "opacity-[50%]"
+                        } `}
+                        onClick={() => {
+                          if (!deleteNotificationId) {
+                            setDeleteNotificationId(notification._id);
+                          }
+                        }}
+                      />
+                    )}
                   </div>
                 </div>
-                {deleteNotificationId === notification._id ? (
-                  <div className="pl-[3px] pr-[3px]">
-                    <div className="h-[20px] w-[20px] rounded-full border border-[3px] border-t-orange-500 border-t-[3px] spin-animation"></div>
-                  </div>
-                ) : (
-                  <MdDelete
-                    className={`h-full pl-[3px] pr-[3px] text-red-500 text-[25px] ${
-                      !deleteNotificationId &&
-                      "hover:bg-red-500 hover:text-orange-50 cursor-pointer"
-                    } rounded-tr-md rounded-br-md transition-all delay-[300] ease-in-out ${
-                      deleteNotificationId && "opacity-[50%]"
-                    } `}
-                    onClick={() => {
-                      if (!deleteNotificationId) {
-                        setDeleteNotificationId(notification._id);
-                      }
-                    }}
-                  />
-                )}
               </div>
             ))}
           </div>

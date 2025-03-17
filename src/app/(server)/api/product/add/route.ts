@@ -28,9 +28,17 @@ export async function POST(req: NextRequest) {
             Product_Details
         });
 
+        let productName;
+
+        try {
+            productName = Product_Details.product_name;
+        } catch (err) {
+            productName = "Added product"
+        }
+
         const newNotification = await notificationModel.create({
             notificationType: "analysis",
-            notificationMessage: `New addition! ${Product_Details.product_name || "Added product"} is now part of your catalog.`,
+            notificationMessage: `New addition! ${productName} is now part of your catalog.`,
         })
 
         await user.products.push(newProduct._id);

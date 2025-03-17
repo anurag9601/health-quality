@@ -124,10 +124,13 @@ const RecentProducts: React.FC<RecentProductsPropsType> = ({
                         <MdCancel className="text-[23px] md:text-[23px] text-red-600" />
                       )}
                       <p className="font-head text-lg">
-                        {product.Product_Details.product_name?.slice(0, 20)}
+                        {product.Product_Details.product_name &&
+                          product.Product_Details.product_name?.slice(0, 20)}
                         {product.Product_Details.product_name &&
                           product.Product_Details.product_name.length > 20 &&
                           "..."}
+                        {!product.Product_Details.product_name &&
+                          "Name not specified in image"}
                       </p>
                     </div>
                     {/* <div className="hidden sm:hidden md:flex items-center gap-[40px] font-head">
