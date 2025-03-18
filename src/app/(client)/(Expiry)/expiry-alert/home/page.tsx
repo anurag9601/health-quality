@@ -6,15 +6,17 @@ import ExpiryRecentProducts from "@/components/ExpiryRecentProducts/ExpiryRecent
 import { UserContext } from "@/context/userContext";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { FaLongArrowAltLeft } from "react-icons/fa";
 
 const ExpiryHome = () => {
   const router = useRouter();
 
-  const { notificationWindowOpen } = useContext(UserContext);
+  const { notificationWindowOpen, user } = useContext(UserContext);
 
   const [addManuallyBoxOpen, setAddManuallyBoxOpen] = React.useState(false);
+
+  const [productLoading, setProductLoading] = React.useState<boolean>(true);
 
   return (
     <div className="min-h-dvh w-full bg-sky-100">

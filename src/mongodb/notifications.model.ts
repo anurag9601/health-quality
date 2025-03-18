@@ -1,6 +1,10 @@
 import mongoose from "mongoose";
 
 const NotificationSchema = new mongoose.Schema({
+    userEmail: {
+        type: String,
+        required: true,
+    },
     notificationType: {
         type: String,
         enum: ["analysis", "expiry", "delete"],

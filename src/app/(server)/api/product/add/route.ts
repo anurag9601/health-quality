@@ -39,6 +39,7 @@ export async function POST(req: NextRequest) {
         const newNotification = await notificationModel.create({
             notificationType: "analysis",
             notificationMessage: `New addition! ${productName} is now part of your catalog.`,
+            userEmail,
         })
 
         await user.products.push(newProduct._id);

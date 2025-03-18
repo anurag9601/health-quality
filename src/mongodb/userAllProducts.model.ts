@@ -9,6 +9,10 @@ const UserAllOperationsSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Products"
     }],
+    expiryAlertProducts: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "ExpiryAlertProducts"
+    }],
     appNotifications: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Notifications"

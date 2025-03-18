@@ -39,32 +39,53 @@ export interface notificationsDataType {
   notificationType: string;
   updatedAt: string;
   _id: string;
+  read: boolean;
+}
+
+export interface expiryAlertProductsDataType {
+  _id: string;
+  userEmail: String;
+  productName: String;
+  expiryDate: String;
+  manufectureDate: String;
 }
 
 interface userContextDataType {
   user: userDataType | null;
   setUser: Dispatch<SetStateAction<userDataType | null>>;
-  userAllProduct: UserProduct[] | [];
+  userAllProduct: UserProduct[] | null;
   setUserAllProduct: Dispatch<SetStateAction<UserProduct[]>>;
   currentOpenProduct: UserProduct | null;
   setCurrentOpenProduct: Dispatch<SetStateAction<UserProduct | null>>;
   notificationWindowOpen: boolean;
   setNotificationWindowOpen: Dispatch<SetStateAction<boolean>>;
-  notifications: notificationsDataType[] | [];
+  notifications: notificationsDataType[] | null;
   setNotifications: Dispatch<SetStateAction<[] | notificationsDataType[]>>;
+  unReadNotifications: notificationsDataType[] | [];
+  setUnReadNotifications: Dispatch<
+    SetStateAction<[] | notificationsDataType[]>
+  >;
+  expiryAlertProducts: expiryAlertProductsDataType[] | null;
+  setExpiryAlertProducts: Dispatch<
+    SetStateAction<expiryAlertProductsDataType[] | []>
+  >;
 }
 
 export const UserContext = React.createContext<userContextDataType>({
   user: null,
   setUser: () => {},
-  userAllProduct: [],
+  userAllProduct: null,
   setUserAllProduct: () => {},
   currentOpenProduct: null,
   setCurrentOpenProduct: () => {},
   notificationWindowOpen: false,
   setNotificationWindowOpen: () => {},
-  notifications: [],
+  notifications: null,
   setNotifications: () => {},
+  unReadNotifications: [],
+  setUnReadNotifications: () => {},
+  expiryAlertProducts: null,
+  setExpiryAlertProducts: () => {},
 });
 
 const UserProvider = ({ children }: { children: ReactNode }) => {
@@ -84,6 +105,14 @@ const UserProvider = ({ children }: { children: ReactNode }) => {
     notificationsDataType[] | []
   >([]);
 
+  const [unReadNotifications, setUnReadNotifications] = React.useState<
+    notificationsDataType[] | []
+  >([]);
+
+  const [expiryAlertProducts, setExpiryAlertProducts] = React.useState<
+    expiryAlertProductsDataType[] | []
+  >([]);
+
   const values = {
     user,
     setUser,
@@ -95,6 +124,10 @@ const UserProvider = ({ children }: { children: ReactNode }) => {
     setNotificationWindowOpen,
     notifications,
     setNotifications,
+    unReadNotifications,
+    setUnReadNotifications,
+    expiryAlertProducts,
+    setExpiryAlertProducts,
   };
   return <UserContext.Provider value={values}>{children}</UserContext.Provider>;
 };

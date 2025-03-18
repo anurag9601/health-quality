@@ -6,8 +6,14 @@ import { redirect, useRouter } from "next/navigation";
 import React, { useContext } from "react";
 
 const ExpiryNav = () => {
-  const { user, setUser, setNotificationWindowOpen, notifications } =
-    useContext(UserContext);
+  const {
+    user,
+    setUser,
+    setNotificationWindowOpen,
+    notifications,
+    setUnReadNotifications,
+    unReadNotifications,
+  } = useContext(UserContext);
 
   const handleUserSignOut = async () => {
     const request = await fetch("/api/signout");
@@ -19,6 +25,16 @@ const ExpiryNav = () => {
       redirect("/signin");
     }
   };
+
+  React.useEffect(() => {
+    if (notifications.length > 0) {
+      let allUnReadNotifications = notifications.filter(
+        (notification) => notification.read === false
+      );
+
+      setUnReadNotifications(allUnReadNotifications);
+    }
+  }, [notifications]);
   return (
     <div className="w-full">
       <div className="w-full pl-[10%] pr-[10%] pt-[5px] pb-[5px] flex items-center justify-between">
@@ -55,9 +71,11 @@ const ExpiryNav = () => {
               width={20}
               className="sm:h-[25px] sm:w-[25px]"
             />
-            {notifications.length > 0 && (
+            {unReadNotifications.length > 0 && (
               <div className="absolute h-[14px] w-[14px] sm:h-[17px] sm:w-[17px] bg-indigo-500 rounded-full inset-y-[-6px] inset-x-[14px] flex items-center justify-center text-[10px] sm:text-[12px] text-blue-50 font-bold">
-                {notifications.length < 99 ? notifications.length : "99+"}
+                {unReadNotifications.length < 99
+                  ? unReadNotifications.length
+                  : "99+"}
               </div>
             )}
           </div>

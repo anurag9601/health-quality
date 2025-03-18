@@ -35,13 +35,13 @@ const UploadImageView: React.FC<PropsType> = ({
   const [currentDataPayload, setCurrentDataPayload] =
     React.useState<CurrentDataPayload | null>(null);
 
-  const convertResponseDataToJSON = (response: string) => {
+  const convertResponseDataToJSON = async (response: string) => {
     const innerJsonString = response
       .trim()
       .replace(/^```json\n/, "")
       .replace(/\n```$/, "");
 
-    const realJsonObject = JSON.parse(innerJsonString);
+    const realJsonObject = await JSON.parse(innerJsonString);
 
     return realJsonObject;
   };

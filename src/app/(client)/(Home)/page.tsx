@@ -83,8 +83,6 @@ const Home = () => {
 
     const response = await request.json();
 
-    console.log(response)
-
     if (response && response.allProductsData) {
       setUserAllProduct(response.allProductsData.products);
       setNotifications(response.allProductsData.appNotifications);

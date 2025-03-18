@@ -10,8 +10,14 @@ interface propsDataType {
 }
 
 const HomeNav: React.FC<propsDataType> = ({ productLoading }) => {
-  const { user, setUser, setNotificationWindowOpen, notifications } =
-    useContext(UserContext);
+  const {
+    user,
+    setUser,
+    setNotificationWindowOpen,
+    notifications,
+    unReadNotifications,
+    setUnReadNotifications,
+  } = useContext(UserContext);
 
   const router = useRouter();
 
@@ -25,6 +31,17 @@ const HomeNav: React.FC<propsDataType> = ({ productLoading }) => {
       redirect("/signin");
     }
   };
+
+  React.useEffect(() => {
+    if (notifications.length > 0) {
+      let allUnReadNotifications = notifications.filter(
+        (notification) => notification.read === false
+      );
+
+      setUnReadNotifications(allUnReadNotifications);
+    }
+  }, [notifications]);
+
   return (
     <div className="w-full">
       <div className="w-full pl-[10%] pr-[10%] pt-[5px] pb-[5px] flex items-center justify-between">
@@ -66,15 +83,16 @@ const HomeNav: React.FC<propsDataType> = ({ productLoading }) => {
                 width={20}
                 className="sm:h-[25px] sm:w-[25px]"
               />
-              {notifications.length > 0 && (
+              {unReadNotifications.length > 0 && (
                 <div className="absolute h-[14px] w-[14px] sm:h-[17px] sm:w-[17px] bg-red-500 rounded-full inset-y-[-6px] inset-x-[14px] flex items-center justify-center text-[10px] sm:text-[12px] text-orange-50 font-bold">
-                  {notifications.length < 99 ? notifications.length : "99+"}
+                  {unReadNotifications.length < 99
+                    ? unReadNotifications.length
+                    : "99+"}
                 </div>
               )}
             </div>
           ) : (
-            <div className="h-[20px] w-[20px] sm:h-[25px] sm:w-[25px] bg-orange-200 rounded-full loading-animation">
-            </div>
+            <div className="h-[20px] w-[20px] sm:h-[25px] sm:w-[25px] bg-orange-200 rounded-full loading-animation"></div>
           )}
         </div>
       </div>

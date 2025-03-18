@@ -23,11 +23,14 @@ export async function GET(req: NextRequest) {
 
         const imageUniqueId = product.productImgURL.split("/").slice(-1)[0].slice(0, -4);
 
+        console.log("imageUniqueId", imageUniqueId);
+
         await cloudinary.v2.uploader.destroy(imageUniqueId);
 
         const newNotification = await notificationModel.create({
             notificationType: "delete",
-            notificationMessage: `Product '${product.Product_Details.product_name}' has been successfully deleted from the Analysis - Recent Added Products.`
+            notificationMessage: `Product '${product.Product_Details.product_name}' has been successfully deleted from the Analysis - Recent Added Products.`,
+            userEmail: product.userEmail,
         });
 
         let userAllOperations = await userAllProducts.findOne({
