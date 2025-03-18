@@ -16,8 +16,13 @@ const RecentProducts: React.FC<RecentProductsPropsType> = ({
 }) => {
   const router = useRouter();
 
-  const { userAllProduct, setUserAllProduct, setCurrentOpenProduct } =
-    useContext(UserContext);
+  const {
+    userAllProduct,
+    setUserAllProduct,
+    setCurrentOpenProduct,
+    notifications,
+    setNotifications,
+  } = useContext(UserContext);
 
   const [deleteId, setDeleteId] = React.useState<string | null>(null);
 
@@ -44,6 +49,10 @@ const RecentProducts: React.FC<RecentProductsPropsType> = ({
       const newUserAllProductsList = userAllProduct.filter(
         (product) => product._id !== id
       );
+
+      const newNotificationList = [respose.notification, ...notifications];
+
+      setNotifications(newNotificationList);
 
       setUserAllProduct(newUserAllProductsList);
     } else {

@@ -78,7 +78,7 @@ const ExpiryNotification = () => {
             <BiSolidNotification className="text-[30px] text-orange-500" />
           </div>
         ) : (
-          <div className="flex flex-col w-full h-full gap-[5px] mt-[10px] mb-[10px]">
+          <div className="flex flex-col w-full h-full gap-[5px] mt-[10px] mb-[10px] overflow-y-auto overflow-x-visible scrollbar-thin scrollbar-thumb-indigo-300 scrollbar-track-blue-100 pl-[1px] pt-[3px]">
             {notifications.map((notification, index) => (
               <div
                 className="h-fit w-full bg-indigo-200 rounded-md flex items-center relative"
@@ -87,6 +87,15 @@ const ExpiryNotification = () => {
                 {notification.notificationType === "analysis" && (
                   <Image
                     src="/analysis.png"
+                    alt=""
+                    height={12}
+                    width={12}
+                    className="absolute inset-y-[-3px] inset-x-[-1px]"
+                  />
+                )}
+                {notification.notificationType === "delete" && (
+                  <Image
+                    src="/notification_delete_icon.png"
                     alt=""
                     height={12}
                     width={12}

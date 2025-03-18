@@ -3,12 +3,16 @@ import mongoose from "mongoose";
 const NotificationSchema = new mongoose.Schema({
     notificationType: {
         type: String,
-        enum: ["analysis", "expiry"],
+        enum: ["analysis", "expiry", "delete"],
         required: true,
     },
     notificationMessage: {
         type: String,
         required: true
+    },
+    read: {
+        type: Boolean,
+        default: false
     }
 }, { timestamps: true });
 
