@@ -53,19 +53,19 @@ export interface expiryAlertProductsDataType {
 interface userContextDataType {
   user: userDataType | null;
   setUser: Dispatch<SetStateAction<userDataType | null>>;
-  userAllProduct: UserProduct[] | null;
+  userAllProduct: UserProduct[] | [];
   setUserAllProduct: Dispatch<SetStateAction<UserProduct[]>>;
   currentOpenProduct: UserProduct | null;
   setCurrentOpenProduct: Dispatch<SetStateAction<UserProduct | null>>;
   notificationWindowOpen: boolean;
   setNotificationWindowOpen: Dispatch<SetStateAction<boolean>>;
-  notifications: notificationsDataType[] | null;
+  notifications: notificationsDataType[] | [];
   setNotifications: Dispatch<SetStateAction<[] | notificationsDataType[]>>;
   unReadNotifications: notificationsDataType[] | [];
   setUnReadNotifications: Dispatch<
     SetStateAction<[] | notificationsDataType[]>
   >;
-  expiryAlertProducts: expiryAlertProductsDataType[] | null;
+  expiryAlertProducts: expiryAlertProductsDataType[] | [];
   setExpiryAlertProducts: Dispatch<
     SetStateAction<expiryAlertProductsDataType[] | []>
   >;
@@ -74,17 +74,17 @@ interface userContextDataType {
 export const UserContext = React.createContext<userContextDataType>({
   user: null,
   setUser: () => {},
-  userAllProduct: null,
+  userAllProduct: [],
   setUserAllProduct: () => {},
   currentOpenProduct: null,
   setCurrentOpenProduct: () => {},
   notificationWindowOpen: false,
   setNotificationWindowOpen: () => {},
-  notifications: null,
+  notifications: [],
   setNotifications: () => {},
   unReadNotifications: [],
   setUnReadNotifications: () => {},
-  expiryAlertProducts: null,
+  expiryAlertProducts: [],
   setExpiryAlertProducts: () => {},
 });
 
