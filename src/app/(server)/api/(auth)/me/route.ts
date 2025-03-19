@@ -1,3 +1,4 @@
+import { redis } from "@/lib/redis";
 import { decryptJWT, verifyJWTInEdge } from "@/services/jwt";
 import { NextRequest, NextResponse } from "next/server";
 export async function GET(req: NextRequest) {

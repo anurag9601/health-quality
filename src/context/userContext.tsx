@@ -69,6 +69,8 @@ interface userContextDataType {
   setExpiryAlertProducts: Dispatch<
     SetStateAction<expiryAlertProductsDataType[] | []>
   >;
+  dataFetched: boolean;
+  setDataFetched: Dispatch<SetStateAction<boolean>>;
 }
 
 export const UserContext = React.createContext<userContextDataType>({
@@ -86,6 +88,8 @@ export const UserContext = React.createContext<userContextDataType>({
   setUnReadNotifications: () => {},
   expiryAlertProducts: [],
   setExpiryAlertProducts: () => {},
+  dataFetched: false,
+  setDataFetched: () => {},
 });
 
 const UserProvider = ({ children }: { children: ReactNode }) => {
@@ -113,6 +117,8 @@ const UserProvider = ({ children }: { children: ReactNode }) => {
     expiryAlertProductsDataType[] | []
   >([]);
 
+  const [dataFetched, setDataFetched] = React.useState<boolean>(false);
+
   const values = {
     user,
     setUser,
@@ -128,6 +134,8 @@ const UserProvider = ({ children }: { children: ReactNode }) => {
     setUnReadNotifications,
     expiryAlertProducts,
     setExpiryAlertProducts,
+    dataFetched,
+    setDataFetched,
   };
   return <UserContext.Provider value={values}>{children}</UserContext.Provider>;
 };

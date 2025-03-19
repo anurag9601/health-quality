@@ -6,8 +6,13 @@ import UploadImageView from "@/components/UploadImageView/UploadImageView";
 import { UserContext } from "@/context/userContext";
 import { getGoogleSignInUserData } from "@/services/authProvider";
 import Image from "next/image";
-import { redirect } from "next/navigation";
-import React, { ChangeEvent, useContext, useEffect } from "react";
+import { redirect, useRouter } from "next/navigation";
+import React, {
+  ChangeEvent,
+  useContext,
+  useEffect,
+  useLayoutEffect,
+} from "react";
 
 const Home = () => {
   const {
@@ -16,13 +21,18 @@ const Home = () => {
     setNotifications,
     setUserAllProduct,
     notificationWindowOpen,
+    dataFetched,
+    setDataFetched,
+    setExpiryAlertProducts,
   } = useContext(UserContext);
 
   const [file, setFile] = React.useState<File | null>(null);
 
   const [imagePreview, setImagePreview] = React.useState<string | null>(null);
 
-  const [productLoading, setProductLoading] = React.useState<boolean>(true);
+  const [productLoading, setProductLoading] = React.useState<boolean>(
+    dataFetched ? false : true
+  );
 
   const uploadFileInputRef = React.useRef<HTMLInputElement | null>(null);
 
@@ -46,9 +56,12 @@ const Home = () => {
   };
 
   const handleGetCurrentUser = React.useCallback(async () => {
+    if (user) return;
+
     const request = await fetch("/api/me");
 
     const response = await request.json();
+    console.log(response);
 
     if (response.data) {
       setUser(response.data);
@@ -58,6 +71,8 @@ const Home = () => {
   }, [setUser]);
 
   const handleSetGoogleAuthUser = async () => {
+    if (user) return;
+
     const userData: any = await getGoogleSignInUserData();
 
     if (userData) {
@@ -74,6 +89,11 @@ const Home = () => {
   const handleGetCurrentUserAllProductsData = async () => {
     if (!user) return;
 
+    if (dataFetched) {
+      setProductLoading(false);
+      return;
+    }
+
     const request = await fetch("/api/product/all", {
       method: "POST",
       body: JSON.stringify({
@@ -86,17 +106,16 @@ const Home = () => {
     if (response && response.allProductsData) {
       setUserAllProduct(response.allProductsData.products);
       setNotifications(response.allProductsData.appNotifications);
+      setExpiryAlertProducts(response.allProductsData.expiryAlertProducts);
+      setDataFetched(true);
     }
 
     setProductLoading(false);
   };
 
-  useEffect(() => {
-    handleGetCurrentUser();
-  }, [handleGetCurrentUser]);
-
-  useEffect(() => {
+  useLayoutEffect(() => {
     handleSetGoogleAuthUser();
+    handleGetCurrentUser();
   }, []);
 
   useEffect(() => {

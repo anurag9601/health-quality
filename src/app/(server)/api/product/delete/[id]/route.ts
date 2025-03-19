@@ -1,6 +1,8 @@
+import { redis } from "@/lib/redis";
 import notificationModel from "@/mongodb/notifications.model";
 import userProduct from "@/mongodb/product.model";
 import userAllProducts from "@/mongodb/userAllProducts.model";
+import { ProtectRoute } from "@/services/protectRoute";
 import cloudinary from "cloudinary";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -13,6 +15,10 @@ cloudinary.v2.config({
 
 export async function GET(req: NextRequest) {
     try {
+        const isValid = ProtectRoute(req);
+
+        if (!isValid) return NextResponse.json({ error: "Unauthorized User" }, { status: 401 });
+
         const _id = req.nextUrl.pathname.split("/").slice(-1)[0];
 
         const product = await userProduct.findById({ _id });
@@ -22,8 +28,6 @@ export async function GET(req: NextRequest) {
         }
 
         const imageUniqueId = product.productImgURL.split("/").slice(-1)[0].slice(0, -4);
-
-        console.log("imageUniqueId", imageUniqueId);
 
         await cloudinary.v2.uploader.destroy(imageUniqueId);
 
@@ -48,6 +52,8 @@ export async function GET(req: NextRequest) {
         if (!deleteProduct) {
             return NextResponse.json({ error: "Invalid request" }, { status: 400 });
         }
+
+        await redis.del(product.userEmail);
 
         return NextResponse.json({ success: true, message: "Product deleted successfully", notification: newNotification });
 

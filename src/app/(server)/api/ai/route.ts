@@ -1,8 +1,13 @@
 import { getImageURLAndGiveResponse } from "@/lib/ai-model";
+import { ProtectRoute } from "@/services/protectRoute";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
     try {
+        const isValid = ProtectRoute(req);
+
+        if (!isValid) return NextResponse.json({ error: "Unauthorized User" }, { status: 401 });
+
         const data = await req.formData();
 
         const imageFile: File | null = data.get("file") as unknown as File;

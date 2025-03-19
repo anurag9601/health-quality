@@ -39,6 +39,8 @@ export async function getImageURLAndGiveResponse(imageBuffer: Buffer<ArrayBuffer
     healthy: A single boolean value (true or false) indicating whether the product is healthy overall. If it contains more unhealthy ingredients than healthy ones, set this to false; otherwise, set it to true.
 
     and if given image is not of any product or not clear simple return one json response like { error: "error as per you notice what is problem" }
+
+    also very import don't respond either respond in 3 second or simple pass error for example { error: "Something went wrong" } don't put on wait more then 3 second do your best to response under 3 seconds
     `
 
         const IMAGE_PART = await fileToGeneratePart(imageBuffer, mimeType);

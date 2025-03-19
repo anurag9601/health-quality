@@ -8,6 +8,7 @@ import {
 import Image from "next/image";
 import React, { Dispatch, SetStateAction, useContext } from "react";
 import ProductDetailPreview from "../ProductDetailPreview/ProductDetailPreview";
+import { useRouter } from "next/navigation";
 
 interface PropsType {
   file: File;
@@ -28,6 +29,8 @@ const UploadImageView: React.FC<PropsType> = ({
   setFile,
   imagePreview,
 }) => {
+  const router = useRouter();
+
   const { user } = useContext(UserContext);
 
   const [loading, setLoading] = React.useState<boolean>(false);
@@ -41,9 +44,7 @@ const UploadImageView: React.FC<PropsType> = ({
       .replace(/^```json\n/, "")
       .replace(/\n```$/, "");
 
-    const realJsonObject = await JSON.parse(innerJsonString);
-
-    return realJsonObject;
+    return await JSON.parse(innerJsonString);
   };
 
   const handleUserUploadRequest = async () => {
@@ -62,6 +63,11 @@ const UploadImageView: React.FC<PropsType> = ({
     if (response.error === true) {
       alert(response.message);
       return;
+    }
+
+    if (!response.response) {
+      alert("Unexpected error");
+      return router.push("/");
     }
 
     if (response) {

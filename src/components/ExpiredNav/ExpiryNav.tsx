@@ -2,10 +2,14 @@
 import { UserContext } from "@/context/userContext";
 import { handleUserGoogleSignOut } from "@/services/authProvider";
 import Image from "next/image";
-import { redirect, useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 import React, { useContext } from "react";
 
-const ExpiryNav = () => {
+interface propsDataType {
+  productLoading: boolean;
+}
+
+const ExpiryNav: React.FC<propsDataType> = ({ productLoading }) => {
   const {
     user,
     setUser,
@@ -60,25 +64,29 @@ const ExpiryNav = () => {
               Sign Out
             </button>
           )}
-          <div
-            className="relative cursor-pointer z-auto"
-            onClick={() => setNotificationWindowOpen(true)}
-          >
-            <Image
-              src={"/expiry-bell.png"}
-              alt=""
-              height={20}
-              width={20}
-              className="sm:h-[25px] sm:w-[25px]"
-            />
-            {unReadNotifications.length > 0 && (
-              <div className="absolute h-[14px] w-[14px] sm:h-[17px] sm:w-[17px] bg-indigo-500 rounded-full inset-y-[-6px] inset-x-[14px] flex items-center justify-center text-[10px] sm:text-[12px] text-blue-50 font-bold">
-                {unReadNotifications.length < 99
-                  ? unReadNotifications.length
-                  : "99+"}
-              </div>
-            )}
-          </div>
+          {!productLoading ? (
+            <div
+              className="relative cursor-pointer z-auto"
+              onClick={() => setNotificationWindowOpen(true)}
+            >
+              <Image
+                src={"/expiry-bell.png"}
+                alt=""
+                height={20}
+                width={20}
+                className="sm:h-[25px] sm:w-[25px]"
+              />
+              {unReadNotifications.length > 0 && (
+                <div className="absolute h-[14px] w-[14px] sm:h-[17px] sm:w-[17px] bg-indigo-500 rounded-full inset-y-[-6px] inset-x-[14px] flex items-center justify-center text-[10px] sm:text-[12px] text-blue-50 font-bold">
+                  {unReadNotifications.length < 99
+                    ? unReadNotifications.length
+                    : "99+"}
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="h-[20px] w-[20px] sm:h-[25px] sm:w-[25px] bg-indigo-300 rounded-full loading-animation"></div>
+          )}
         </div>
       </div>
       <hr className="h-[1px] w-full bg-gray-500 border-none" />
