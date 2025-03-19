@@ -17,7 +17,7 @@ export default auth(async (req) => {
 
     const encodedToken = req.cookies.get("session_cookie")?.value;
 
-    if (isProtectedPath.includes(path) && !encodedToken) {
+    if (isProtectedPath.includes(path) && !encodedToken || path.startsWith("/api") && !encodedToken) {
         return NextResponse.redirect(new URL("/signin", req.nextUrl));
     }
 

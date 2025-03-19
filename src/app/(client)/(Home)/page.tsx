@@ -61,7 +61,6 @@ const Home = () => {
     const request = await fetch("/api/me");
 
     const response = await request.json();
-    console.log(response);
 
     if (response.data) {
       setUser(response.data);

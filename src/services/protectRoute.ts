@@ -5,7 +5,9 @@ export function ProtectRoute(req: NextRequest) {
 
     const googleAuthToken = req.cookies.get("authjs.session-token")?.value;
 
-    if (encodedToken || googleAuthToken) return true;
+    const productionAuthToken = req.cookies.get("__Secure-authjs.session-token")?.value;
+
+    if (encodedToken || googleAuthToken || productionAuthToken) return true;
 
     return false
 }

@@ -60,6 +60,8 @@ const UploadImageView: React.FC<PropsType> = ({
 
     const response = await request.json();
 
+    console.log("response", response);
+
     if (response.error === true) {
       alert(response.message);
       return;
@@ -67,7 +69,7 @@ const UploadImageView: React.FC<PropsType> = ({
 
     if (!response.response) {
       alert("Unexpected error");
-      return router.push("/");
+      router.push("/");
     }
 
     if (response) {

@@ -10,7 +10,6 @@ interface propsDataType {
 const ExpiryRecentProducts: React.FC<propsDataType> = ({ productLoading }) => {
   const { expiryAlertProducts } = React.useContext(UserContext);
 
-  console.log("expiryAlertProducts", expiryAlertProducts);
   return (
     <div className="pl-[10%] pr-[10%] mt-[20px]">
       <div className="flex items-start gap-[10px]">

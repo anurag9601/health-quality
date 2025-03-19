@@ -1,4 +1,5 @@
 import { redis } from "@/lib/redis";
+import dbConnect from "@/mongodb/connectDB";
 import notificationModel from "@/mongodb/notifications.model";
 import userProduct from "@/mongodb/product.model";
 import userAllProducts from "@/mongodb/userAllProducts.model";
@@ -19,8 +20,10 @@ export async function GET(req: NextRequest) {
 
         if (!isValid) return NextResponse.json({ error: "Unauthorized User" }, { status: 401 });
 
+        await dbConnect();
+        
         const _id = req.nextUrl.pathname.split("/").slice(-1)[0];
-
+        
         const product = await userProduct.findById({ _id });
 
         if (!product) {
