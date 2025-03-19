@@ -6,7 +6,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
     try {
-        const isValid = ProtectRoute(req);
+        const isValid = await ProtectRoute(req);
 
         if (!isValid) return NextResponse.json({ error: "Unauthorized User" }, { status: 401 });
 

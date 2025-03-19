@@ -8,9 +8,11 @@ export async function POST(req: NextRequest) {
     try {
         await dbConnect();
         
-        const isValid = ProtectRoute(req);
+        const isValid = await ProtectRoute(req);
 
         if (!isValid) return NextResponse.json({ error: "Unauthorized User" }, { status: 401 });
+
+        console.log("isValid", isValid);
 
         const { deleteNotificationId } = await req.json();
 

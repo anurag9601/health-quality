@@ -16,7 +16,7 @@ cloudinary.v2.config({
 
 export async function GET(req: NextRequest) {
     try {
-        const isValid = ProtectRoute(req);
+        const isValid = await ProtectRoute(req);
 
         if (!isValid) return NextResponse.json({ error: "Unauthorized User" }, { status: 401 });
 
