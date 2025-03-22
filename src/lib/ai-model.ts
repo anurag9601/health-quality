@@ -21,6 +21,8 @@ export async function getImageURLAndGiveResponse(imageBuffer: Buffer<ArrayBuffer
         const PROMPT = `
     You are an AI agent specialized in providing detailed food ingredient information. Given an image of a product’s ingredient list, return a structured JSON object with the following details:
 
+    DO NOT ADD ANY NOTE AND EXTRA TEXT IN RESPONSE JUST PASS ME THE JSON IN THE FORMAT
+
     Product Details:
 
     product_name: The name of the product.
@@ -38,10 +40,7 @@ export async function getImageURLAndGiveResponse(imageBuffer: Buffer<ArrayBuffer
     overall_health_assessment: A summary of the product’s healthiness based on its ingredients.
     healthy: A single boolean value (true or false) indicating whether the product is healthy overall. If it contains more unhealthy ingredients than healthy ones, set this to false; otherwise, set it to true.
 
-    and if given image is not of any product or not clear simple return one json response like { error: "error as per you notice what is problem" }
-
-    Again response Should be JSON format only
-    `
+    and if given image is not of any product or not clear simple return one json response like { error: "ERROR AS PER YOU NOTICE WHAT IS THE PROBLEM" }`
 
         const IMAGE_PART = await fileToGeneratePart(imageBuffer, mimeType);
 
