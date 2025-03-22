@@ -12,8 +12,6 @@ export async function POST(req: NextRequest) {
 
         if (!isValid) return NextResponse.json({ error: "Unauthorized User" }, { status: 401 });
 
-        console.log("isValid", isValid);
-
         const { deleteNotificationId } = await req.json();
 
         const deletedNotification = await notificationModel.findByIdAndDelete(deleteNotificationId);

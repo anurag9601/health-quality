@@ -45,12 +45,8 @@ const UploadImageView: React.FC<PropsType> = ({
       .replace(/^```/, "")
       .replace(/```$/, "");
 
-    try {
-      return JSON.parse(cleanedResponse);
-    } catch (error) {
-      router.push("/");
-      throw new Error("Invalid JSON format");
-    }
+    const realJson = await JSON.parse(cleanedResponse);
+    return realJson;
   };
 
   const handleUserUploadRequest = async () => {

@@ -30,7 +30,7 @@ const ExpiryHome = () => {
   const [productLoading, setProductLoading] = React.useState<boolean>(true);
 
   const [imageClickWindowOpen, setImageClickWindowOpen] =
-    React.useState<boolean>(true);
+    React.useState<boolean>(false);
 
   const handleGetCurrentUser = React.useCallback(async () => {
     if (user) return;
