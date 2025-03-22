@@ -63,6 +63,7 @@ const SignIn = () => {
         setUser(respose.data);
         setWait(false);
         route.push("/");
+        return;
       } else if (respose.error) {
         setErrors((prev) => [...prev, respose.error]);
         setWait(true);
