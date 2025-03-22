@@ -41,6 +41,9 @@ export async function getImageURLAndGiveResponse(imageBuffer: Buffer<ArrayBuffer
     and if given image is not of any product or not clear simple return one json response like { error: "error as per you notice what is problem" }
 
     also very import don't respond either respond in 3 second or simple pass error for example { error: "Something went wrong" } don't put on wait more then 3 second do your best to response under 3 seconds
+
+
+    JSON Format: The response should be this format only
     `
 
         const IMAGE_PART = await fileToGeneratePart(imageBuffer, mimeType);

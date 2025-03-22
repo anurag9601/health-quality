@@ -1,5 +1,6 @@
 "use client";
 import AddExpireDetails from "@/components/AddExpireDetails/AddExpireDetails";
+import ClickWindow from "@/components/ClickWindow/ClickWindow";
 import ExpiryNav from "@/components/ExpiredNav/ExpiryNav";
 import ExpiryNotification from "@/components/ExpiryNotifications/ExpiryNotification";
 import ExpiryRecentProducts from "@/components/ExpiryRecentProducts/ExpiryRecentProducts";
@@ -27,6 +28,9 @@ const ExpiryHome = () => {
   const [addManuallyBoxOpen, setAddManuallyBoxOpen] = React.useState(false);
 
   const [productLoading, setProductLoading] = React.useState<boolean>(true);
+
+  const [imageClickWindowOpen, setImageClickWindowOpen] =
+    React.useState<boolean>(true);
 
   const handleGetCurrentUser = React.useCallback(async () => {
     if (user) return;
@@ -101,6 +105,7 @@ const ExpiryHome = () => {
       {addManuallyBoxOpen && (
         <AddExpireDetails setAddManuallyBoxOpen={setAddManuallyBoxOpen} />
       )}
+      {imageClickWindowOpen && <ClickWindow />}
       <ExpiryNav productLoading={productLoading} />
       <div className="w-full h-[20px] pl-[10%] pt-[10px] mb-[10px]">
         <span
@@ -111,21 +116,15 @@ const ExpiryHome = () => {
         </span>
       </div>
       <div className="flex flex-col sm:flex-row align-start justify-center gap-[10px] pl-[10%] sm:pl-[20%] pr-[10%] sm:pr-[20%] mt-[20px]">
-        <label className="cursor-pointer flex flex-col items-center">
+        <div className="max-h-fit h-full w-full flex items-center justify-center">
           <Image
             src={"/expiry-camera.png"}
             alt=""
             width={250}
             height={250}
-            className="w-[180px] h-[180px] md:w-[250px] md:h-[250px]"
+            className="w-[180px] h-[180px] md:w-[200px] md:h-[200px] lg:h-[250px] lg:w-[250px] cursor-pointer"
           />
-          <input
-            type="file"
-            capture="user"
-            accept="image/*"
-            className="invisible"
-          />
-        </label>
+        </div>
         <div className="flex flex-col gap-[20px] items-start">
           <p className="font-head sm:text-sm md:text-lg mt-[5%] font-medium min-w-[200px]">
             Tap the camera to upload a photo of your product&apos;s expiry date.

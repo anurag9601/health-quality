@@ -39,12 +39,18 @@ const UploadImageView: React.FC<PropsType> = ({
     React.useState<CurrentDataPayload | null>(null);
 
   const convertResponseDataToJSON = async (response: string) => {
-    const innerJsonString = response
+    const cleanedResponse = response
       .trim()
-      .replace(/^```json\n/, "")
-      .replace(/\n```$/, "");
+      .replace(/^```json/, "")
+      .replace(/^```/, "")
+      .replace(/```$/, "");
 
-    return await JSON.parse(innerJsonString);
+    try {
+      return JSON.parse(cleanedResponse);
+    } catch (error) {
+      router.push("/");
+      throw new Error("Invalid JSON format");
+    }
   };
 
   const handleUserUploadRequest = async () => {
