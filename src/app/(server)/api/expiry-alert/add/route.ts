@@ -1,7 +1,7 @@
 import { redis } from "@/lib/redis";
 import dbConnect from "@/mongodb/connectDB";
+import expiryAlertModel from "@/mongodb/expireAlertProduct.model";
 import notificationModel from "@/mongodb/notifications.model";
-import userProduct from "@/mongodb/product.model";
 import userAllProducts from "@/mongodb/userAllProducts.model";
 import { ProtectRoute } from "@/services/protectRoute";
 import { NextRequest, NextResponse } from "next/server";
@@ -12,7 +12,11 @@ export async function POST(req: NextRequest) {
 
         if (!isValid) return NextResponse.json({ error: "Unauthorized User" }, { status: 401 });
 
-        const { userEmail, productImgURL, Ingredients_Information, Overall_Health_Assessment, Product_Details } = await req.json();
+        const { userEmail, productName, expiryDate, manufactureDate } = await req.json();
+
+        if (!userEmail || !productName || !expiryDate || !manufactureDate) {
+            return NextResponse.json({ error: "All data not found." }, { status: 400 });
+        };
 
         await dbConnect();
 
@@ -26,29 +30,20 @@ export async function POST(req: NextRequest) {
             });
         }
 
-        const newProduct = await userProduct.create({
+        const newExpiryAlertProduct = await expiryAlertModel.create({
             userEmail,
-            productImgURL,
-            Ingredients_Information,
-            Overall_Health_Assessment,
-            Product_Details
+            productName,
+            expiryDate,
+            manufactureDate,
         });
-
-        let productName;
-
-        try {
-            productName = Product_Details.product_name;
-        } catch (err) {
-            productName = "Added product"
-        }
 
         const newNotification = await notificationModel.create({
-            notificationType: "analysis",
-            notificationMessage: `New addition! ${productName} is now part of your catalog.`,
+            notificationType: "expiry-add",
+            notificationMessage: `"Great news! 🎉 ${productName} has been added to your expiry alert catalog. Stay informed this product expires on ${expiryDate} and was manufactured on ${manufactureDate}.`,
             userEmail,
         });
 
-        await user.products.push(newProduct._id);
+        await user.expiryAlertProducts.push(newExpiryAlertProduct._id);
 
         await user.appNotifications.push(newNotification._id);
 
@@ -56,9 +51,10 @@ export async function POST(req: NextRequest) {
 
         await redis.del(userEmail);
 
-        return NextResponse.json({ addNotification: newNotification, addProduct: newProduct }, { status: 200 });
+        return NextResponse.json({ addNotification: newNotification, addExpiryAlertProduct: newExpiryAlertProduct }, { status: 200 });
+
     } catch (err) {
-        console.log(`Error in /api/product/add route ${err}`);
+        console.log(`Error in /api/expiry-alert/add route ${err}`);
         return NextResponse.json({ error: "Internal server error" }, { status: 500 })
     }
 }

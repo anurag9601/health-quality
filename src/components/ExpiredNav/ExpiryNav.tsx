@@ -51,7 +51,7 @@ const ExpiryNav: React.FC<propsDataType> = ({ productLoading }) => {
         <div className="font-head flex items-center gap-[15px]">
           {user && user.continueWith === "google" ? (
             <button
-              className="bg-gradient-to-r from-blue-300 to-indigo-500 pt-[5px] pb-[5px] pl-[25px] pr-[25px] sm:text-[14px] lg:text-[17px] font-medium rounded-md border hover:border-black transition-all duration-300 ease-in-out"
+              className="bg-gradient-to-r from-blue-300 to-indigo-500 pt-[5px] pb-[5px] pl-[25px] pr-[25px] sm:text-[14px] lg:text-[17px] rounded-md border hover:border-black transition-all duration-300 ease-in-out"
               onClick={async () => await handleUserGoogleSignOut()}
             >
               Sign Out

@@ -105,7 +105,9 @@ const ExpiryHome = () => {
       {addManuallyBoxOpen && (
         <AddExpireDetails setAddManuallyBoxOpen={setAddManuallyBoxOpen} />
       )}
-      {imageClickWindowOpen && <ClickWindow />}
+      {imageClickWindowOpen && (
+        <ClickWindow setImageClickWindowOpen={setImageClickWindowOpen} />
+      )}
       <ExpiryNav productLoading={productLoading} />
       <div className="w-full h-[20px] pl-[10%] pt-[10px] mb-[10px]">
         <span
@@ -123,6 +125,7 @@ const ExpiryHome = () => {
             width={250}
             height={250}
             className="w-[180px] h-[180px] md:w-[200px] md:h-[200px] lg:h-[250px] lg:w-[250px] cursor-pointer"
+            onClick={() => setImageClickWindowOpen(true)}
           />
         </div>
         <div className="flex flex-col gap-[20px] items-start">

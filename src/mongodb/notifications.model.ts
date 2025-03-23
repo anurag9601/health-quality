@@ -7,7 +7,7 @@ const NotificationSchema = new mongoose.Schema({
     },
     notificationType: {
         type: String,
-        enum: ["analysis", "expiry", "delete"],
+        enum: ["analysis", "expiry-add", "delete"],
         required: true,
     },
     notificationMessage: {

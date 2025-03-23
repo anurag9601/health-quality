@@ -13,7 +13,7 @@ const ExpiryAlertProductSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    manufectureDate: {
+    manufactureDate: {
         type: String,
         required: true,
     }

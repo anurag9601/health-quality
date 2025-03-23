@@ -34,11 +34,16 @@ export async function POST(req: NextRequest) {
                 sort: { createdAt: -1 }
             }
         }).populate({
+            path: "expiryAlertProducts",
+            options: {
+                sort: { createdAt: -1 }
+            }
+        }).populate({
             path: "appNotifications",
             options: {
                 sort: { createdAt: -1 }
             }
-        });
+        })
 
         await redis.set(userEmail, JSON.stringify(allProductsData));
 

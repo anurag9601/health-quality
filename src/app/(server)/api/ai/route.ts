@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
 
         const bytes = await imageFile.arrayBuffer();
 
-        const imageBuffer: Buffer<ArrayBufferLike> = Buffer.from(bytes);
+        const imageBuffer = Buffer.from(bytes);
 
         const response = await getImageURLAndGiveResponse(imageBuffer, imageFile.type);
 

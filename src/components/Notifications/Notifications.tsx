@@ -159,6 +159,15 @@ const Notifications = () => {
                         className="absolute inset-y-[-3px] inset-x-[-1px]"
                       />
                     )}
+                    {notification.notificationType === "expiry-add" && (
+                      <Image
+                        src="/expiry-add.png"
+                        alt=""
+                        height={14}
+                        width={14}
+                        className="absolute inset-y-[-3px] inset-x-[-1px]"
+                      />
+                    )}
                     <div className="flex-1 h-fit">
                       <p className="text-[14px] sm:text-[15px] mt-[10px] pl-[10px] pr-[10px] h-fit mb-[5px]">
                         {notification.notificationMessage}
