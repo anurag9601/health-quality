@@ -80,10 +80,25 @@ const ClickWindow: React.FC<propsDataType> = ({ setImageClickWindowOpen }) => {
         setProductBackImgFile(null);
         setProductFrontImgPreviewURL(null);
         setProductBackImgPreviewURL(null);
+        setLoading(false);
         return;
       }
 
       if (user) {
+        if (
+          !realJson.product_name ||
+          !realJson.product_expiry_date ||
+          !realJson.product_manufacture_date
+        ) {
+          alert("All data is not available in the image.");
+          setProductFrontImgFile(null);
+          setProductBackImgFile(null);
+          setProductFrontImgPreviewURL(null);
+          setProductBackImgPreviewURL(null);
+          setLoading(false);
+          return;
+        }
+
         const data = {
           userEmail: user.email,
           productName: realJson.product_name,
@@ -138,7 +153,9 @@ const ClickWindow: React.FC<propsDataType> = ({ setImageClickWindowOpen }) => {
                     className="h-[100%] w-[100%] object-center object-scale-down overflow-hidden"
                   />
                 ) : (
-                  <label className="h-[100%] w-[100%] bg-indigo-400 rounded-lg cursor-pointer flex items-center justify-center p-[20%] text-center text-indigo-50 font-bold text-md sm:text-lg">
+                  <label
+                    className="h-[100%] w-[100%] bg-indigo-400 rounded-lg cursor-pointer flex items-center justify-center p-[20%] text-center text-indigo-50 font-bold text-md sm:text-lg"
+                  >
                     <p>
                       Click on the tab to capture an image of the{" "}
                       <span className="text-indigo-800">front side</span> of

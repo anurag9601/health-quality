@@ -26,7 +26,8 @@ export async function POST(req: NextRequest) {
             user = await userAllProducts.create({
                 userEmail: userEmail,
                 products: [],
-                appNotifications: []
+                appNotifications: [],
+                expiryAlertProducts: []
             });
         }
 

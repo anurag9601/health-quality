@@ -44,10 +44,10 @@ export interface notificationsDataType {
 
 export interface expiryAlertProductsDataType {
   _id: string;
-  userEmail: String;
-  productName: String;
-  expiryDate: String;
-  manufectureDate: String;
+  userEmail: string;
+  productName: string;
+  expiryDate: string;
+  manufactureDate: string;
 }
 
 interface userContextDataType {

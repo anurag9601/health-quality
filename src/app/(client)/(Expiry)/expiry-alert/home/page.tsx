@@ -100,7 +100,7 @@ const ExpiryHome = () => {
   }, [user]);
 
   return (
-    <div className="min-h-dvh w-full bg-sky-100">
+    <div className="min-h-dvh w-full bg-sky-100 overflow-auto">
       {notificationWindowOpen && <ExpiryNotification />}
       {addManuallyBoxOpen && (
         <AddExpireDetails setAddManuallyBoxOpen={setAddManuallyBoxOpen} />
