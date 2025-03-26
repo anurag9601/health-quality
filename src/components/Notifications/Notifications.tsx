@@ -173,8 +173,8 @@ const Notifications = () => {
                       <Image
                         src="/delete-product.png"
                         alt=""
-                        height={14}
-                        width={14}
+                        height={16}
+                        width={16}
                         className="absolute inset-y-[-3px] inset-x-[-1px]"
                       />
                     )}

@@ -15,11 +15,20 @@ const ExpiryRecentProducts: React.FC<propsDataType> = ({ productLoading }) => {
     null
   );
 
-  function daysBetween(day1: string, day2: string) {
-    const time1 = new Date(day1).getTime();
-    const time2 = new Date(day2).getTime();
+  // function daysBetween(day1: string, day2: string) {
+  //   const time1 = new Date(day1).getTime();
+  //   const time2 = new Date(day2).getTime();
 
-    const diff = Math.abs(time2 - time1);
+  //   const diff = Math.abs(time2 - time1);
+
+  //   return Math.ceil(diff / (24 * 60 * 60 * 1000));
+  // }
+
+  function daysToExpire(expiryDate: string) {
+    const expiry = new Date(expiryDate).getTime();
+    const currentTime = Date.now();
+
+    const diff = Math.abs(currentTime - expiry);
 
     return Math.ceil(diff / (24 * 60 * 60 * 1000));
   }
@@ -146,8 +155,7 @@ const ExpiryRecentProducts: React.FC<propsDataType> = ({ productLoading }) => {
                       <p className="flex-1 text-[14px] sm:text-[17px] font-head font-bold text-red-600 hidden sm:block">
                         {isExpired(product.expiryDate)
                           ? "Expired"
-                          : `${daysBetween(
-                              product.manufactureDate,
+                          : `${daysToExpire(
                               product.expiryDate
                             )} Days to expire`}
                       </p>
@@ -172,8 +180,7 @@ const ExpiryRecentProducts: React.FC<propsDataType> = ({ productLoading }) => {
                         <p className="flex-1 text-[14px] font-head font-bold text-red-600 block sm:hidden">
                           {isExpired(product.expiryDate)
                             ? "Expired"
-                            : `${daysBetween(
-                                product.manufactureDate,
+                            : `${daysToExpire(
                                 product.expiryDate
                               )} Days to expire`}
                         </p>

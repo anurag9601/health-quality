@@ -44,7 +44,7 @@ const ProductPage = () => {
           : "Product"}
       </h3>
       <hr className="h-[1px] w-full bg-gray-500 border-none" />
-      <div className="h-full w-full overflow-y-scroll p-[10px] scrollbar-thin scrollbar-thumb-orange-300 scrollbar-track-orange-100">
+      <div className="h-full w-full overflow-y-auto overflow-x-hidden p-[10px] scrollbar-thin scrollbar-thumb-orange-300 scrollbar-track-orange-100">
         <div className="flex flex-col-reverse gap-[10px] items-center sm:flex-row sm:items-start">
           <div className="w-full h-fit">
             <p className="font-normal flex items-center gap-[10px] text-lg">
