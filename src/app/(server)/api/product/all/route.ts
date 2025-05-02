@@ -15,6 +15,7 @@ export async function POST(req: NextRequest) {
 
         const { userEmail } = await req.json();
 
+        //valkey error fix
         const userAllData = await redis.get(userEmail);
 
         if (userAllData) {
